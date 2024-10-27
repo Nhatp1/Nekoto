@@ -1910,7 +1910,7 @@ def run(phone, i):
 import threading
 if __name__ == "__main__":
     threads_quan_li= []
-    print("SRC BY: MinhNguyen3004")
+    print("SRC BY: N-TOOL")
     phone = input("Nhập số điện thoại: ")
     count = int(input("Nhập số lần spam: "))
     luong_chay = int(input("Nhập số luồng chạy cùng 1 lúc: "))
