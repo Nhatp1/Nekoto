@@ -40,7 +40,7 @@ red="\033[0;31m"
 redb="\033[1;31m"
 end='\033[0m'
 dev="\033[1;39m[\033[1;31m×\033[1;39m]\033[1;39m"
-client_ip = requests.get('https://kiemtraip.com/raw.php').text
+
 def banner():
  banner = f"""
 \033[1;31m███╗   ██╗   ████████╗ ██████╗  ██████╗ ██╗     
@@ -55,8 +55,6 @@ def banner():
 \033[1;33m==========================================================
 [⟨⟩] \033[1;31m➩ \033[1;31mAdmin: \033[1;34mN-Tool
 [⟨⟩] \033[1;31m➩ \033[1;34mZalo Box: \033[1;39mhttps://zalo.me/g/ppqcrt420
-[⟨⟩] \033[1;31m➩ \033[1;34mNgười dùng : \033[1;32m{usernamedv}
-[⟨⟩] \033[1;31m➩ \033[1;34mThời gian còn lại : \033[1;32m{key_time}\033[1;34m
 [⟨⟩] \033[1;31m➩ \033[1;34mGiới hạn thiết bị : \033[1;32m1/*
 \033[1;33m==========================================================
                       \033[1;34m[Thông Báo]
@@ -115,7 +113,6 @@ def get_ip_address():
         return None
 
 # Hàm để hiển thị địa chỉ IP của thiết bị
-client_ip = requests.get('https://kiemtraip.com/raw.php').text
 def display_ip_address(ip_address):
     if ip_address:
         banner = """
@@ -131,8 +128,6 @@ def display_ip_address(ip_address):
 \033[1;33m==========================================================
 [⟨⟩] \033[1;31m➩ \033[1;31mAdmin: \033[1;34mN-Tool
 [⟨⟩] \033[1;31m➩ \033[1;34mZalo Box: \033[1;39mhttps://zalo.me/g/ppqcrt420
-[⟨⟩] \033[1;31m➩ \033[1;34mNgười dùng : \033[1;32m{usernamedv}
-[⟨⟩] \033[1;31m➩ \033[1;34mThời gian còn lại : \033[1;32m{key_time}\033[1;34m
 [⟨⟩] \033[1;31m➩ \033[1;34mGiới hạn thiết bị : \033[1;32m1/*
 \033[1;33m==========================================================
                       \033[1;34m[Thông Báo]
@@ -145,7 +140,7 @@ def display_ip_address(ip_address):
             print(x, end="")
             time.sleep(0.001)
 
-        print(f"\033[1;32mĐịa chỉ IP : {client_ip}     Version: {current_version}")
+        print(f"\033[1;32mĐịa chỉ IP : {ip_address}     Version: {current_version}")
     else:
         print("Không thể lấy địa chỉ IP của thiết bị.")
 
@@ -224,7 +219,7 @@ def main():
                     token_link4m = '6671b20e704d5f32b2048914'
                     link4m_response = requests.get(f'https://link4m.co/api-shorten/v2?api={token_link4m}&format=json&url={link_key}')
                     print("\033[1;31mLưu Ý: \033[1;33mTool Free Nhé Cả Nhà Yêu \033[1;91m❣\033[1;32m")
-                    # Kiểm tra kết quả trả về  link rút gọn
+                    # Kiểm tra kết quả trả về từ link rút gọn
                     if link4m_response.status_code == 200:
                         link4m_data = link4m_response.json()
                         if link4m_data.get('status') == "error":
@@ -301,7 +296,6 @@ while True:
 	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m23 \033[1;97m: \033[1;34mTool Report Facebook  \033[1;32m[Online]")
 	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m24 \033[1;97m: \033[1;34mTool Spam SMS \033[1;32m[Online]")
 	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m25 \033[1;97m: \033[1;34mTool Fake Cccd \033[1;33m[update]")
-	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m26 \033[1;97m: \033[1;34mTool Buff FL TikTok\033[1;32m[Online]")
 	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m00 \033[1;97m: \033[1;34mThoát Tool \033[1;32m[Online]")
 	print(f"\033[97m════════════════════════════════════════════════════════")
 	chon = input('\033[1;91m┌─╼\033[1;97m[\033[1;91m<\033[1;97m/\033[1;91m>\033[1;97m]--\033[1;91m>\033[1;97m Nhập lựa chọn \033[1;97m \n\033[1;91m└─╼\033[1;91m✈ \033[1;33m : ')
