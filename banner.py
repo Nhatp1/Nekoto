@@ -1,323 +1,371 @@
-#!/usr/bin/python3
+# Kramer/Specter Deobf by KhanhNguyen9872
+# file name: [ToolGop.py] (py - 3.11)
+# dump -> code 51
 
-import sys
-import requests
-import ast
-import subprocess
-import time
-import hashlib
-import os
-import json
-import socket
-import threading
-import random 
+
+import threading,base64
+import os,time,re,json,random
 from datetime import datetime, timedelta
+from time import sleep,strftime
+from bs4 import BeautifulSoup
+import requests
+import os, sys
+import socket
 
-chars = " ➤ [«/»] >>>"
-pyver = ".".join(sys.version.split(" ")[0].split(".")[:-1])
-ip = requests.post('https://api.proxyscrape.com/ip.php').text
-ngay = str(time.strftime("%d"))
-thang = str(time.strftime("%m"))
-nam = str(time.strftime("%Y"))
-
-def install_missing_modules():
-    md = open(__file__, 'r').read()
-    tree = ast.parse(md)
-    imported_modules = set()
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Import):
-            for alias in node.names:
-                imported_modules.add(alias.name)
-        elif isinstance(node, ast.ImportFrom):
-            imported_modules.add(node.module)
-    for lib in imported_modules:
-        try:
-            __import__(lib)
-        except ImportError:
-            print(f"Đang Tiến Hành Cài Đặt Thư Viện: [{lib}]")
-            try:
-                start_time = time.time()
-                process = subprocess.Popen(["pip", "install", lib], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                while True:
-                    return_code = process.poll()
-                    if return_code is not None:
-                        if return_code == 0:
-                            print(f"Thành Công .. [{lib}]")
-                        else:
-                            print(f"Thất Bại .. [{lib}]. Vui Lòng Thử Lại Sau.")
-                            print(process.stderr.read().decode())
-                        break
-                    elapsed_time = time.time() - start_time
-                    print(f"Đang Cài Đặt {lib}... [{elapsed_time:.2f}s]", end='\r')
-                    time.sleep(0.1)
-            except Exception as e:
-                print(f"Đã Xảy Ra Lỗi Khi Cài Đặt {lib}: {e}")
-                sys.exit(1)
-                
-def check_connection():
-    while True:
-        try:
-            response = requests.get("https://www.google.com.vn", timeout=5)
-        except (requests.exceptions.ReadTimeout, requests.ConnectionError):
-            print("Vui Lòng Kiểm Tra Kết Nối Mạng !!!")
-            sys.exit()
-        except (requests.exceptions.RequestException, Exception) as e:
-            print(f"Lỗi: {str(e)}")
-        time.sleep(5)    
-
-def clear():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
+try:
+  from faker import Faker
+  from requests import session
+  from colorama import Fore, Style
+  import requests, random, re
+  from random import randint
+  import requests,pystyle
+  import socks
+except:
+  os.system("pip install faker")
+  os.system("pip install requests")
+  os.system("pip install colorama")
+  os.system('pip install requests && pip install bs4 && pip install pystyle')
+  os.system("pip3 install requests pysocks")
+  print('__Vui Lòng Chạy Lại Tool__')
+from pystyle import Add, Center, Anime, Colors, Colorate, Write, System
+xnhac = "\033[1;36m"
+do = "\033[1;31m"
+luc = "\033[1;32m"
+vang = "\033[1;33m"
+xduong = "\033[1;34m"
+hong = "\033[1;35m"
+trang = "\033[1;39m"
+whiteb="\033[1;39m"
+red="\033[0;31m"
+redb="\033[1;31m"
+end='\033[0m'
+dev="\033[1;39m[\033[1;31m×\033[1;39m]\033[1;39m"
+client_ip = requests.get('https://kiemtraip.com/raw.php').text
 def banner():
-    ban = f"""
-███╗   ██╗   ████████╗ ██████╗  ██████╗ ██╗     
-████╗  ██║   ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-██╔██╗ ██║█████╗██║   ██║   ██║██║   ██║██║     
-██║╚██╗██║╚════╝██║   ██║   ██║██║   ██║██║     
-██║ ╚████║      ██║   ╚██████╔╝╚██████╔╝███████╗
-╚═╝  ╚═══╝      ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
+ banner = f"""
+\033[1;31m███╗   ██╗   ████████╗ ██████╗  ██████╗ ██╗     
+\033[1;36m████╗  ██║   ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
+\033[1;31m██╔██╗ ██║█████╗██║   ██║   ██║██║   ██║██║     
+\033[1;36m██║╚██╗██║╚════╝██║   ██║   ██║██║   ██║██║     
+\033[1;31m██║ ╚████║      ██║   ╚██████╔╝╚██████╔╝███████╗
+\033[1;36m╚═╝  ╚═══╝      ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
                                                 
-                © Copyright N-TOOL
-════════════════════════════════════════════════════════════
-{chars} (((Author : N-TOOL)))
-{chars} Contact Me:
-{chars}     -> [@NeKo109] [Telegram]
-{chars} Group Me:    
-{chars}     -> [https://zalo.me/g/addkgf309] [Zalo]
+\033[1;31m                © Copyright N-TOOL
+
+\033[1;33m==========================================================
+[⟨⟩] \033[1;31m➩ \033[1;31mAdmin: \033[1;34mN-Tool
+[⟨⟩] \033[1;31m➩ \033[1;34mZalo Box: \033[1;39mhttps://zalo.me/g/ppqcrt420
+[⟨⟩] \033[1;31m➩ \033[1;34mNgười dùng : \033[1;32m{usernamedv}
+[⟨⟩] \033[1;31m➩ \033[1;34mThời gian còn lại : \033[1;32m{key_time}\033[1;34m
+[⟨⟩] \033[1;31m➩ \033[1;34mGiới hạn thiết bị : \033[1;32m1/*
+\033[1;33m==========================================================
+                      \033[1;34m[Thông Báo]
+\033[1;36m[⟨⟩]➩ \033[1;34mTOOL ĐANG TRONG QUÁ TRÌNH UPDATE THÊM   
+\033[1;33m==========================================================
 """
-    for i in ban:
-        sys.stdout.write(i)
-        sys.stdout.flush()
-        time.sleep(0.005)
-
-def line(length):
-    line = ""
-    for i in range(length):
-        line += f"═"
-    for i in range(len(line)):
-        sys.stdout.write(line[i])
-        sys.stdout.flush()
-        time.sleep(0.005)
-    print() 
-
-def custom_delay(types):
-    for phase in ['XXXXX', 'XXXX.', 'XXX..', 'XX...', 'X....', '.X...', '..X..', '...X.', '....X', '...XX', '..XXX', '.XXXX', 'XXXXX']:
-        print(f'{chars} [N-TOOL][{types}] >>> [{phase}]', end='\r')
-        time.sleep(1/13)
-
-def chay_tool(url):
-    try:
-        exec(requests.get(url).text)
-    except (requests.ConnectionError, requests.exceptions.ReadTimeout):
-        print("Vui Lòng Kiểm Tra Kết Nối Mạng !!!")
-        sys.exit()
-    except (requests.exceptions.RequestException, Exception) as e:
-        print(f"Lỗi: {str(e)}")        
+ for X in banner:
+  sys.stdout.write(X)
+  sys.stdout.flush() 
+  sleep(0.000001)
+def bes4(url):
+    # Gửi yêu cầu GET đến URL
+    response = requests.get(url)
+    
+    # Nếu yêu cầu thành công (status code 200)
+    if response.status_code == 200:
+        # Phân tích nội dung HTML của trang web
+        soup = BeautifulSoup(response.content, 'html.parser')
         
-def key_free_by_ngtuw():
-    global chars, pyver, ip, ngay, thang, nam 
-    file_key = f"File_Key_Ngay_{ngay}.json"
-    file_key_cu = f"File_Key_Ngay_{int(ngay)-1}.json"
-    file_ip = "saved_ip.json"
-    token = "6671b20e704d5f32b2048914"
-    alias = "".join(random.sample([chr(i) for i in range(97, 123)], k=5))
-    keyfree = [hashlib.md5(f"NTOOL - {ngay}{ip}{pyver}".encode()).hexdigest(), 'NhatDepTrai']
-    url = f"https://key.c25tool.net/key.html?key={keyfree[0]}"
-    link = None
-    def save_ip():
-        data = {'ip': ip}
-        with open(file_ip, 'w') as f:
-            json.dump(data, f)
-    def check_ip():
-        if os.path.exists(file_ip):
-            with open(file_ip, 'r') as f:
-                saved_data = json.load(f)
-                saved_ip = saved_data.get('ip')
-                if saved_ip != ip:
-                    print("IP Hiện Tại Không Khớp Với IP Đã Lưu. Vui Lòng Kiểm Tra Lại Mạng.")
-                    sys.exit()
-        else:
-            save_ip()
-    check_ip()
-    try:
-        response = requests.get(f"https://link4m.co/api-shorten/v2?api={token}&url={url}&alias={alias}").json()
-        if response['status'] == 'success':
-            link = response['shortenedUrl']
-        else:
-            print(f"Lỗi: {response}")
-            return
-    except (requests.ConnectionError, requests.exceptions.ReadTimeout):
-        print("Vui Lòng Kiểm Tra Kết Nối Mạng !!!")
-        sys.exit()
-    except (requests.exceptions.RequestException, Exception) as e:
-        print(f"Lỗi: {str(e)}")    
-    def enter_key():
-        if os.path.exists(file_key_cu):
-            os.system(f"rm {file_key_cu}")
-        line(60)    
-        print(f"{chars} Đây Là Tool Free Nên Mỗi Ngày 1 Key Nhé")    
-        print(f"{chars} Key Sẽ Ở Sau Phần “key=” Của Url Nhé")    
-        print(f"{chars} Hôm Nay Ngày {ngay} Tháng {thang} Năm {nam}")    
-        if link:              
-            print(f"{chars} Link > {link} <")
-        else:
-            print(f"{chars} Không Thể Lấy Link Rút Gọn. Vui Lòng Chạy Lại Tool!")
-            sys.exit()
-        while True:
-            line(60)
-            inp = input(f"{chars} Nhập Key: ")
-            if inp in keyfree:  
-                expiration_date = datetime.now().replace(hour=23, minute=59, second=0, microsecond=0)
-                data = {'key': inp, 'expiration_date': expiration_date.isoformat()}
-                json.dump(data, open(file_key, 'w'))
-                line(60)
-                print(f"{chars} Đang Vào Tool Vui Lòng Đợi !")
-                info_key = (f"""         >>> Thông Tin Key <<<
-{chars} Loại Key (FREE)
-{chars} Thời Gian: (1 Ngày) 
-{chars} Thời Gian Còn Lại ({expiration_date})""")                  
-                break
-            else:
-                line(60)
-                print("Key Sai. Vui Lòng Nhập Lại !!!")
-        return info_key       
-    if not os.path.exists(file_key):
-        info_key = enter_key()
-    else:
-        if os.path.exists(file_key_cu):
-            os.system(f"rm {file_key_cu}")
-        data = json.load(open(file_key, 'r'))
-        inp = data['key']    
-        expiration_date = datetime.fromisoformat(data['expiration_date'])
-        start_new_day = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1) + timedelta(seconds=1)  
-        if expiration_date <= start_new_day:
-            if inp in keyfree:
-                line(60)
-                print(f"{chars} Đang Vào Tool Vui Lòng Đợi !")               
-                info_key = (f"""         >>> Thông Tin Key <<<
-{chars} Loại Key (FREE)
-{chars} Thời Gian: (1 Ngày) 
-{chars} Thời Gian Còn Lại ({expiration_date - datetime.now()})""")   
-            else:
-                line(60)
-                print("Key Sai. Vui Lòng Nhập Lại !!!")
-                info_key = enter_key()
-        else:
-            start_new_day
-    return info_key
-
-def tool(info_key):
-    global chars, pyver, ip, ngay, thang, nam
-    line(60)    
-    print(info_key)
-    line(60)
-    print("         >>> Thông Tin User <<<")
-    print(f"{chars} Version Python ({pyver})")
-    print(f"{chars} IP ({ip})")
-    print(f"{chars} Hôm Nay Ngày {ngay} Tháng {thang} Năm {nam}")     
-    line(60)
-    print("┌───────────────────┐")
-    print("│ TOOL TRAO ĐỔI SUB │")
-    print("└───────────────────┘")
-    print(f"{chars} Nhập __[ 001 ]__ Tool Trao Đổi Sub Tiktok (Mobile + Computer)")
-    print(f"{chars} Nhập __[ 002 ]__ Tool Trao Đổi Sub Facebook (Mobile + Computer)")
-    print(f"{chars} Nhập __[ 003 ]__ Tool Trao Đổi Sub Fanpage (Mobile + Computer)")
-    print(f"{chars} Nhập __[ 004 ]__ Tool Trao Đổi Sub Instagram (Mobile + Computer)")    
-    print("┌─────────────────────┐")
-    print("│ TOOL TƯƠNG TÁC CHÉO │")
-    print("└─────────────────────┘")
-    print(f"{chars} Nhập __[ 101 ]__ Tool Tương Tác Chéo Tiktok (Mobile + Computer)[OffLine]")
-    print(f"{chars} Nhập __[ 102 ]__ Tool Tương Tác Chéo Facebook (Mobile + Computer)[OffLine]")
-    print(f"{chars} Nhập __[ 103 ]__ Tool Tương Tác Chéo Fanpage (Mobile + Computer)")
-    print(f"{chars} Nhập __[ 104 ]__ Tool Tương Tác Chéo Instagram (Mobile + Computer)")
-    print("┌─────────────┐")
-    print("│ TOOL GOLIKE │")
-    print("└─────────────┘")
-    print(f"{chars} Nhập __[ 201 ]__ Tool Golike Tiktok (Mobile + Computer)")
-    print(f"{chars} Nhập __[ 202 ]__ Tool Golike Tiktok Tự Động (Mobile + Computer)")
-    print(f"{chars} Nhập __[ 203 ]__ Tool Golike Instagram (Mobile + Computer)")
-    print(f"{chars} Nhập __[ 204 ]__ Tool Golike Twitter (Mobile + Computer)")
-    print(f"{chars} Nhập __[ 205 ]__ Tool Golike YouTube (Mobile + Computer)")
-    print(f"{chars} Nhập __[ 206 ]__ Tool Golike Thread (Mobile + Computer)")
-    print(f"{chars} Nhập __[ 207 ]__ Tool Golike Linkedin (Mobile + Computer)") 
-    print("┌─────────────┐")
-    print("│ TOOL TIỆN ÍCH│")
-    print("└─────────────┘")
-    print(f"{chars} Nhập __[ 208 ]__ Tool Tấn Công Web (Mobile + Computer)") 
-    print(f"{chars} Nhập __[ 209 ]__ Tool Spam Sms (Mobile + Computer)") 
-    print(f"{chars} Nhập __[ 210 ]__ Tool Buff View TikTok (Mobile + Computer)") 
-    print(f"{chars} Nhập __[ 211 ]__ Tool Buff FL TikTok (Mobile + Computer)") 
-    while True:
-        try:
-            print("╔══════════════════════════════════════════════════════════╗")
-            print("║ Vui Lòng Nhập Số Bạn Muốn Để Vào Tool ")
-            choose = input(f"╚➤➤➤➤ ")
-            if not choose.isdigit():
-                line(60)
-                print(f"{chars} Vui Lòng Chỉ Nhập Số !")
-                continue   
-        except Exception as e:
-            print("Lỗi: {str(e)}")
-            continue   
-        break
-    return choose   
-
-def ngtuw_dep_trai_vcl(choose):
-    line(60)
-    if choose == "001":
-        threading.Thread(target=custom_delay, args=("ĐANG VÀO TOOL SỐ ___[ 001 ]___ VUI LÒNG ĐỢI",)).start()
-        chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TDSTIKTOK.py")
-    elif choose == '002':
-        chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TDSFULLJOB.py")
-    elif choose == '003':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TDSPRO5v1.py")
-    elif choose == '004':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TDSIG.py")
-    elif choose == '101':
-    	chay_tool(" ")
-    elif choose == '102':
-    	chay_tool(" ")
-    elif choose == '103':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TTCIG.py")
-    elif choose == '104':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TTCPRO5v1.py")
-    elif choose == '201':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoTikTokv1.py")
-    elif choose == '202':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoTikTokv2.py")
-    elif choose == '203':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoIG.py")
-    elif choose == '204':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoX.py")
-    elif choose == '205':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoYTB.py")
-    elif choose == '206':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoTheads.py")
-    elif choose == '207':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoLinkedin.py")
-    elif choose == '209':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/refs/heads/main/SPAMSMSV1.py")
-    elif choose == '208':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/refs/heads/main/DDOS.py")
-    elif choose == '210':
-    	chay_tool("https://raw.githubusercontent.com/Nhatp1/Nekoto/refs/heads/main/VIEWTIK.py")
-    else:
-        print(f"{chars} Lựa Chọn Không Hợp Lệ. Vui Lòng Nhập Lại !!")
-        time.sleep(2)  
-        return True  
+        # Tìm thẻ <span> chứa thông tin phiên bản và trạng thái bảo trì
+        version_tag = soup.find('span', id='version0')
+        maintenance_tag = soup.find('span', id='maintenance0')
         
-if __name__ == '__main__':
-    install_missing_modules()
-    threading.Thread(target=check_connection, daemon=True).start()
-    clear()
-    banner()
-    info_key = key_free_by_ngtuw()
-    while True:
-        clear()
-        banner()
-        choose = tool(info_key)
-        valid_choice = ngtuw_dep_trai_vcl(choose)
-        if valid_choice:  
-            continue
+        # Lấy nội dung văn bản bên trong thẻ
+        version = version_tag.text.strip() if version_tag else None
+        maintenance = maintenance_tag.text.strip() if maintenance_tag else None
+        
+        return version, maintenance
+    
+    return None, None
+
+def checkver():
+    url = 'https://key.c25tool.net/'
+    version, maintenance = bes4(url)
+    
+    if maintenance == 'on':
+        print("Tool đang được bảo trì. Vui lòng thử lại sau. \nHoặc vào nhóm Tele: https://t.me/+Fz2j0ObF2hNiNGJl")
+        sys.exit()
+    
+    return version
+
+# Sử dụng hàm checkver để kiểm tra phiên bản
+current_version = checkver()
+if current_version:
+  
+    print(f"Phiên bản hiện tại: {current_version}")
+else:
+    print("Không thể lấy thông tin phiên bản hoặc tool đang được bảo trì.")
+# Hàm để lấy địa chỉ IP của thiết bị
+def get_ip_address():
+    try:
+        hostname = socket.gethostname()
+        ip_address = socket.gethostbyname(hostname)
+        return ip_address
+    except:
+        return None
+
+# Hàm để hiển thị địa chỉ IP của thiết bị
+client_ip = requests.get('https://kiemtraip.com/raw.php').text
+def display_ip_address(ip_address):
+    if ip_address:
+        banner = """
+\033[1;31m███╗   ██╗   ████████╗ ██████╗  ██████╗ ██╗     
+\033[1;36m████╗  ██║   ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
+\033[1;31m██╔██╗ ██║█████╗██║   ██║   ██║██║   ██║██║     
+\033[1;36m██║╚██╗██║╚════╝██║   ██║   ██║██║   ██║██║     
+\033[1;31m██║ ╚████║      ██║   ╚██████╔╝╚██████╔╝███████╗
+\033[1;36m╚═╝  ╚═══╝      ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
+                                                
+\033[1;31m                © Copyright N-TOOL
+
+\033[1;33m==========================================================
+[⟨⟩] \033[1;31m➩ \033[1;31mAdmin: \033[1;34mN-Tool
+[⟨⟩] \033[1;31m➩ \033[1;34mZalo Box: \033[1;39mhttps://zalo.me/g/ppqcrt420
+[⟨⟩] \033[1;31m➩ \033[1;34mNgười dùng : \033[1;32m{usernamedv}
+[⟨⟩] \033[1;31m➩ \033[1;34mThời gian còn lại : \033[1;32m{key_time}\033[1;34m
+[⟨⟩] \033[1;31m➩ \033[1;34mGiới hạn thiết bị : \033[1;32m1/*
+\033[1;33m==========================================================
+                      \033[1;34m[Thông Báo]
+\033[1;36m[⟨⟩]➩ \033[1;34mTOOL ĐANG TRONG QUÁ TRÌNH UPDATE THÊM   
+\033[1;33m==========================================================
+"""
+
+        os.system('cls' if os.name == 'nt' else 'clear')
+        for x in banner:
+            print(x, end="")
+            time.sleep(0.001)
+
+        print(f"\033[1;32mĐịa chỉ IP : {client_ip}     Version: {current_version}")
+    else:
+        print("Không thể lấy địa chỉ IP của thiết bị.")
+
+# Hàm để lưu thông tin IP và key vào tệp tin JSON
+def luu_thong_tin_ip(ip, key, expiration_date):
+    data = {}
+    try:
+        with open('ip_key.json', 'r') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        pass
+
+    # Lưu key cho IP vào trong dữ liệu
+    data[ip] = {'key': key, 'expiration_date': expiration_date.isoformat()}
+
+    # Lưu lại vào tệp tin
+    with open('ip_key.json', 'w') as file:
+        json.dump(data, file)
+
+# Hàm để kiểm tra xem IP đã sử dụng key chưa và key còn hạn hay không
+def kiem_tra_ip(ip):
+    try:
+        with open('ip_key.json', 'r') as file:
+            data = json.load(file)
+            if ip in data:
+                expiration_date = datetime.fromisoformat(data[ip]['expiration_date'])
+                if expiration_date > datetime.now():
+                    return data[ip]['key']
+            return None
+    except (FileNotFoundError, KeyError, TypeError):
+        return None
+
+# Hàm để tạo key và URL mới dựa trên IP hiện tại
+def generate_key_and_url(ip_address):
+    ngay = int(datetime.now().day)
+    key1 = str(ngay * 27 + 27)
+    
+    # Xử lý địa chỉ IP để chỉ lấy các số
+    ip_numbers = ''.join(filter(str.isdigit, ip_address))
+        
+    key = f'NTOOL-{key1}{ip_numbers}'
+    # Thời gian hết hạn là 23:59:00 hôm nay
+    expiration_date = datetime.now().replace(hour=23, minute=59, second=0, microsecond=0)
+    url = f'https://key.c25tool.net/key.html?key={key}'
+    return url, key, expiration_date
+
+# Hàm để kiểm tra xem đã qua 00:00:01 của ngày mới chưa
+def da_qua_gio_moi():
+    now = datetime.now()
+    midnight = now.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
+    start_new_day = midnight + timedelta(seconds=1)
+    return now >= start_new_day
+# Chương trình chính
+def main():
+    # Lấy và hiển thị địa chỉ IP của thiết bị
+    ip_address = get_ip_address()
+    display_ip_address(ip_address)
+
+    # Kiểm tra và tạo link rút gọn để vượt key cho từng địa chỉ IP
+    if ip_address:
+        existing_key = kiem_tra_ip(ip_address)
+        if existing_key:
+            print(f"\033[1;35mTool còn hạn, mời bạn dùng tool. ")
+            sleep(2)
         else:
-            break  
+            url, key, expiration_date = generate_key_and_url(ip_address)
+            token_yeumoney = '432c9b236e4e2a7ca16f55b2029fe3461c78be79bb267c98e4f80f49303dbab3'
+            yeumoney_response = requests.get(f'https://yeumoney.com/QL_api.php?token={token_yeumoney}&format=json&url={url}')
+            if yeumoney_response.status_code == 200:
+                yeumoney_data = yeumoney_response.json()
+                if yeumoney_data.get('status') == "error":
+                    print(yeumoney_data.get('message'))
+                    quit()
+                else:
+                    link_key = yeumoney_data.get('shortenedUrl')
+                    token_link4m = '6671b20e704d5f32b2048914'
+                    link4m_response = requests.get(f'https://link4m.co/api-shorten/v2?api={token_link4m}&format=json&url={link_key}')
+                    print("\033[1;31mLưu Ý: \033[1;33mTool Free Nhé Cả Nhà Yêu \033[1;91m❣\033[1;32m")
+                    # Kiểm tra kết quả trả về  link rút gọn
+                    if link4m_response.status_code == 200:
+                        link4m_data = link4m_response.json()
+                        if link4m_data.get('status') == "error":
+                            print(link4m_data.get('message'))
+                            quit()
+                        else:
+                            link_key = link4m_data.get('shortenedUrl')
+                            print('Link Để Vượt Key Là:', link_key)  # Sử dụng dấu phẩy thay vì dấu cộng
+                    else:
+                        print('Không thể kết nối đến dịch vụ rút gọn URL')
+                        quit()
+            else:
+                print('Không thể kết nối đến dịch vụ rút gọn URL')
+                quit()
+
+            # Yêu cầu người dùng nhập key
+            while True:
+                keynhap = input('Key Đã Vượt Là: ')
+
+                # Kiểm tra key nhập vào với key được tạo ra từ IP hiện tại
+                if keynhap == key:
+                    print('Key Đúng Mời Bạn Dùng Tool')
+                    sleep(2)
+                    luu_thong_tin_ip(ip_address, keynhap, expiration_date)
+                    break
+                else:
+                    print('Key Sai Vui Lòng Vượt Lại Link:', link_key)
+        
+        # Kiểm tra nếu đã qua 00:00:01 của ngày mới
+        if da_qua_gio_moi():
+            print("Key của bạn đã hết hạn. Đợi 2 giây để lấy key mới từ ngày mới...")
+            time.sleep(2)
+            main()  # Gọi lại main() để lấy key mới từ ngày mới
+
+if __name__ == "__main__":
+    main()
+while True:
+	os.system('cls' if os.name == 'nt' else 'clear')
+	banner()
+	print("\033[1;37m╔══════════════════════╗         ")
+	print("\033[1;37m║  \033[1;32mTool Auto Golike    \033[1;37m║          ")
+	print("\033[1;37m╚══════════════════════╝           ")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m1 \033[1;97m: \033[1;34mTool Auto TikTok \033[1;32m[Online] \033[1;32m[Termux]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m2 \033[1;97m: \033[1;34mTool Auto TikTok Tự Động \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m3 \033[1;97m: \033[1;34mTool Auto Instagram \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m4 \033[1;97m: \033[1;34mTool Auto Twitter \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m5 \033[1;97m: \033[1;34mTool Auto Youtube \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m6 \033[1;97m: \033[1;34mTool Auto Thread \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m7 \033[1;97m: \033[1;34mTool Auto Linkedin \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print("\033[1;37m╔══════════════════════╗         ")
+	print("\033[1;37m║  \033[1;32mTool Tương Tác Chéo \033[1;37m║          ")
+	print("\033[1;37m╚══════════════════════╝           ")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m8 \033[1;97m: \033[1;34mTool TTC Facebook \033[0;31m[Offline] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m9 \033[1;97m: \033[1;34mTool TTC Pro5 \033[0;31m[Offline] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m10 \033[1;97m: \033[1;34mTool TTC Pro5v1 \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m11 \033[1;97m: \033[1;34mTool TTC TikTok \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m12 \033[1;97m: \033[1;34mTool TTC Instagram \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print("\033[1;37m╔══════════════════════╗         ")
+	print("\033[1;37m║  \033[1;32mTool TraoDoiSub.com \033[1;37m║          ")
+	print("\033[1;37m╚══════════════════════╝           ")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m13 \033[1;97m: \033[1;34mTool TDS Facebook \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m14 \033[1;97m: \033[1;34mTool TDS Pro5 \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m15 \033[1;97m: \033[1;34mTool TDS Pro5v1 \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m16 \033[1;97m: \033[1;34mTool TDS TikTok \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m17 \033[1;97m: \033[1;34mTool TDS Instagram \033[1;32m[Online] \033[1;32m[Termux + PC]")
+	print("\033[1;37m╔══════════════════════╗         ")
+	print("\033[1;37m║  \033[1;32mTool Tiện Ích \033[1;37m      ║   ")
+	print("\033[1;37m╚══════════════════════╝           ")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m18 \033[1;97m: \033[1;34mTool Get ID Facebook \033[1;32m[Online]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m19 \033[1;97m: \033[1;34mTool Get Token Facebook \033[1;32m[Online]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m20 \033[1;97m: \033[1;34mTool Spam Message \033[1;32m[Online]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m21 \033[1;97m: \033[1;34mTool Share Ảo Facebook \033[0;31m[Offline]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m22 \033[1;97m: \033[1;34mTool Đào Mail \033[1;32m[Online]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m23 \033[1;97m: \033[1;34mTool Report Facebook  \033[1;32m[Online]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m24 \033[1;97m: \033[1;34mTool Spam SMS \033[1;32m[Online]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m25 \033[1;97m: \033[1;34mTool Fake Cccd \033[1;33m[update]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m26 \033[1;97m: \033[1;34mTool Buff FL TikTok\033[1;32m[Online]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m00 \033[1;97m: \033[1;34mThoát Tool \033[1;32m[Online]")
+	print(f"\033[97m════════════════════════════════════════════════════════")
+	chon = input('\033[1;91m┌─╼\033[1;97m[\033[1;91m<\033[1;97m/\033[1;91m>\033[1;97m]--\033[1;91m>\033[1;97m Nhập lựa chọn \033[1;97m \n\033[1;91m└─╼\033[1;91m✈ \033[1;33m : ')
+	print('\033[1;39m─────────────────────────────────────────────────────────── ')
+	if chon == '1':
+		# Thành Công
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoTikTokv1.py').text)
+	elif chon == '2':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoTikTokv2.py').text)
+	elif chon == '3':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoIG.py').text)
+	elif chon == '4':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoX.py').text)
+	elif chon == '5':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoYTB.py').text)
+	elif chon == '6':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoTheads.py').text)
+	elif chon == '7':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoLinkedin.py').text)
+		# TTC
+#	elif chon == '8':
+#		exec(requests.get('https://raw.githubusercontent.com/trinhhuong2004/ShareToolYTB/main/TuongTacCheo/TTCFB.py').text)
+	elif chon == '9':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TTCPRO5.py').text)
+	elif chon == '10':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TTCPRO5v1.py').text)
+#	elif chon == '11':
+#		exec(requests.get('https://raw.githubusercontent.com/trinhhuong2004/ShareToolYTB/main/TuongTacCheo/TTCTikTok.py').text)
+	elif chon == '12':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TTCIG.py').text)
+		# TDS
+	elif chon == '13':
+		# Thanh Công
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TDSFULLJOB.py').text)
+	elif chon == '14':
+		# Thanh Công
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TDSPRO5.py').text)
+	elif chon == '15':
+		# Thanh Công
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TDSPRO5v1.py').text)
+	elif chon == '16':
+		# Thanh Công
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TDSTIKTOK.py').text)
+	elif chon == '17':
+		# Thanh Công
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TDSIG.py').text)	
+		# Tiên ích
+	elif chon == '18':
+		# Thanh Công
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/GETUID.py').text)
+	elif chon == '19':
+		# Thanh Công
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/GETTOKEN.py').text)
+	elif chon == '20':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/SPAMMESS.py').text)
+	elif chon == '23':
+		# Thanh Công
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/REPORTFB.py').text)
+	elif chon == '22':
+		# Thanh Công
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/DAOMAIL.py').text)
+	elif chon == '24':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/refs/heads/main/SPAMSMSV1.py').text)
+#    elif chon == '00':
+#		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/THOATTOOL.py').text)          
+	else:
+		sys.exit("")
