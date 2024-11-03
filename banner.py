@@ -177,6 +177,7 @@ def kiem_tra_ip(ip):
 def generate_key_and_url(ip_address):
     ngay = int(datetime.now().day)
     key1 = str(ngay * 27 + 27)
+ #   keyvip=("ntoolvip")
     
     # Xử lý địa chỉ IP để chỉ lấy các số
     ip_numbers = ''.join(filter(str.isdigit, ip_address))
@@ -296,6 +297,8 @@ while True:
 	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m23 \033[1;97m: \033[1;34mTool Report Facebook  \033[1;32m[Online]")
 	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m24 \033[1;97m: \033[1;34mTool Spam SMS \033[1;32m[Online]")
 	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m25 \033[1;97m: \033[1;34mTool Fake Cccd \033[1;33m[update]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m26 \033[1;97m: \033[1;34mTool Buff Fl TikTok \033[1;32m[Online]")
+	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m27 \033[1;97m: \033[1;34mTool Buff  TikTok \033[1;32m[Online]")
 	print(f"\033[1;97m[\033[1;32m*\033[1;97m] \033[1;33m00 \033[1;97m: \033[1;34mThoát Tool \033[1;32m[Online]")
 	print(f"\033[97m════════════════════════════════════════════════════════")
 	chon = input('\033[1;91m┌─╼\033[1;97m[\033[1;91m<\033[1;97m/\033[1;91m>\033[1;97m]--\033[1;91m>\033[1;97m Nhập lựa chọn \033[1;97m \n\033[1;91m└─╼\033[1;91m✈ \033[1;33m : ')
@@ -316,14 +319,14 @@ while True:
 	elif chon == '7':
 		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/AutoLinkedin.py').text)
 		# TTC
-#	elif chon == '8':
-#		exec(requests.get('https://raw.githubusercontent.com/trinhhuong2004/ShareToolYTB/main/TuongTacCheo/TTCFB.py').text)
+	elif chon == '27':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/refs/heads/main/BUFFTIK.py').text)
 	elif chon == '9':
 		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TTCPRO5.py').text)
 	elif chon == '10':
 		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TTCPRO5v1.py').text)
-#	elif chon == '11':
-#		exec(requests.get('https://raw.githubusercontent.com/trinhhuong2004/ShareToolYTB/main/TuongTacCheo/TTCTikTok.py').text)
+	elif chon == '26':
+		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/refs/heads/main/FLTIK.py').text)
 	elif chon == '12':
 		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/TTCIG.py').text)
 		# TDS
