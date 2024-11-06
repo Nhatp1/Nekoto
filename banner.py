@@ -364,7 +364,7 @@ while True:
 		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/main/DAOMAIL.py').text)
 	elif chon == '24':
 		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/refs/heads/main/SPAMSMSV1.py').text)
-    elif chon == '21':
-		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/refs/heads/main/SHAREAO.py').text)          
+#    elif chon == '21':
+#		exec(requests.get('https://raw.githubusercontent.com/Nhatp1/Nekoto/refs/heads/main/SHAREAO.py').text)          
 	else:
 		sys.exit("")
