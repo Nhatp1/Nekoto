@@ -58,7 +58,80 @@ os.system('cls' if os.name=='nt' else 'clear')
 listck = []
 listjob = []
 thanh = f'[</>] =>'
+def tha# mở code
+import requests
+import sys 
+import base64
+import uuid
+import os
+import json
+import dns.resolver
+import socket
+from random import randint
+from pystyle import Write, Colors
+from bs4 import BeautifulSoup
+from datetime import datetime
+from time import sleep
+from random_user_agent.user_agent import UserAgent
+from random_user_agent.params import SoftwareName, OperatingSystem
+print("Chờ tí đi,đang load file và tool!!!")
+# Hiệu ứng tải
+for i in range(1, 101):
+ sys.stdout.write(f"\r{BOLD}{LIME}ĐANG LOAD FILE TOOL: {i}% {'█' * (i // 5)}{RESET}")
+ sys.stdout.flush()
+ sleep(0.03)
+
+
+def bes4(url):
+    try:
+        response = requests.get(url, timeout=5)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, 'html.parser')
+            version_tag = soup.find('span', id='version')
+            maintenance_tag = soup.find('span', id='maintenance')
+            version = version_tag.text.strip() if version_tag else None
+            maintenance = maintenance_tag.text.strip() if maintenance_tag else None
+            return version, maintenance
+    except requests.RequestException:
+        return None, None
+    return None, None
+
+    print("Không thể lấy thông tin phiên bản hoặc tool đang được bảo trì.")
+    sys.exit()
+# Cấu hình DNS Resolver
+resolver = dns.resolver.Resolver(configure=False)
+resolver.nameservers = ['8.8.8.8']
+org_socket = socket.getaddrinfo
+def google_socket(host, port, family=0, type=0, proto=0, flags=0):
+    try:
+        info = resolver.resolve(host)
+        ip_address = info[0].to_text()
+        return org_socket(ip_address, port, family, type, proto, flags)
+    except:
+        return org_socket(host, port, family, type, proto, flags)
+socket.getaddrinfo = google_socket
+# Thiết lập User-Agent ngẫu nhiên
+software_names = [SoftwareName.CHROME.value]
+operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value]   
+user_agent_rotator = UserAgent(software_names=software_names, operating_systems=operating_systems, limit=100)
+os.system('cls' if os.name=='nt' else 'clear')
+listck = []
+listjob = []
+thanh = f'[</>] =>'
 def thanhngang(so):
+    for i in range(so):
+        print('═',end ='')
+    print('')
+# Màu sắc cho hiển thị
+xnhac = "\033[1;36m"
+do = "\033[1;31m"
+luc = "\033[1;32m"
+vang = "\033[1;33m"
+RESET = "\033[0m"
+BOLD = "\033[1m"
+CYAN = "\033[96m"
+MAGENTA = "\033[95m"
+nhngang(so):
     for i in range(so):
         print('═',end ='')
     print('')
