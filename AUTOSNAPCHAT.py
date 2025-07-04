@@ -1,35 +1,173 @@
-import json
-import os,time
+try:
+    import os
+    import sys
+    import time
+    import json
+    import random
+    import string
+    import requests
+    import string
+    import base64
+    import subprocess
+    from time import sleep
+    import uuid
+    import hashlib
+    from colorama import Fore, init
+    from collections import defaultdict    
+    from datetime import datetime, timedelta
+    from rich.console import Console
+    from rich.panel import Panel
+    from rich.table import Table
+    from rich.text import Text
+    from rich import box
+    from colorama import init
+    from pystyle import Colors, Colorate
+except ModuleNotFoundError as e:
+    lib = e.name
+    print(f"Thiếu thư viện {lib}, đang cài đặt 💻...")
+    try:
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', lib])
+        print(f"Đã cài đặt {lib} thành công! 📂")
+        os.system("cls" if os.name == "nt" else "clear")
+        os.execl(sys.executable, sys.executable, *sys.argv)
+    except subprocess.CalledProcessError:
+        print(f"Không thể cài đặt {lib}, thoát tool ...")
+        sys.exit(1)
+
+        
+        
+RESET = "\033[0m"
+BOLD = "\033[1m"
+CYAN = "\033[96m"
+MAGENTA = "\033[95m"
+YELLOW = "\033[93m"
+GREEN = "\033[92m"
+BLUE = "\033[94m"
+AQUA = "\033[96m"
+LIME = "\033[92m"
+
+os.system("cls" if os.name == "nt" else "clear")
+# import lại
+import string
+import requests
+import random
+from collections import defaultdict    
+from datetime import datetime, timedelta
+from rich.console import Console
+from rich.panel import Panel
+from rich.text import Text
+from rich import box
+from colorama import init
 import cloudscraper
+from colorama import Fore, init
+from pystyle import Colors, Colorate 
+
+import requests
+import random
+import string
+import hashlib,os
+
+trang = "\033[1;37m\033[1m"
+xanh_la = "\033[1;32m\033[1m"
+xanh_duong = "\033[1;34m\033[1m"
+xanhnhat = '\033[1m\033[38;5;51m'
+do = "\033[1;31m\033[1m\033[1m"
+xam = '\033[1;30m\033[1m'
+vang = "\033[1;33m\033[1m"
+tim = "\033[1;35m\033[1m"
+MAGENTA = "\033[95m"
+YELLOW = "\033[93m"
+GREEN = "\033[92m"
+BLUE = "\033[94m"
+AQUA = "\033[96m"
+LIME = "\033[92m"
+hongnhat = "#FFC0CB"
+kt_code = "🌸"
+dac_biet = "\033[32;5;245m\033[1m\033[38;5;39m"
+vua = "\033[1;39m[\033[1;32m ¤ \033[1;39m] \033[32;5;245m\033[1m\033[38;5;39m=> "
+
+import threading
+import base64
+import os
+import time
+import re
+import json
+import random
 import requests
 import socket
-import subprocess
-from time import strftime
+import sys
+from rich.console import Console
+from rich.panel import Panel
+from rich.text import Text
+from rich import box
+from colorama import Fore, init
+from colorama import init
+from pystyle import Colors, Colorate 
 from time import sleep
 from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
-import time
-from colorama import Fore, init
-import sys
+from concurrent.futures import ThreadPoolExecutor
 
-scraper = cloudscraper.create_scraper()
 
-banner = f"""
-\033[32;5;245m\033[1m\033[38;5;39m███╗   ██╗██████╗    ████████╗ ██████╗  ██████╗ ██╗     
-\033[32;5;245m\033[1m\033[38;5;39m████╗  ██║██╔══██╗   ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-\033[32;5;245m\033[1m\033[38;5;39m██╔██╗ ██║██████╔╝█████╗██║   ██║   ██║██║   ██║██║     
-\033[32;5;245m\033[1m\033[38;5;39m██║╚██╗██║██╔═══╝ ╚════╝██║   ██║   ██║██║   ██║██║     
-\033[32;5;245m\033[1m\033[38;5;39m██║ ╚████║██║           ██║   ╚██████╔╝╚██████╔╝███████╗
-\033[32;5;245m\033[1m\033[38;5;39m╚═╝  ╚═══╝╚═╝           ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝                                                       
-"""
+RESET = "\033[0m"
+BOLD = "\033[1m"
+CYAN = "\033[96m"
+MAGENTA = "\033[95m"
+YELLOW = "\033[93m"
+GREEN = "\033[92m"
+BLUE = "\033[94m"
+AQUA = "\033[96m"
+LIME = "\033[92m"
+
+
+colors = [
+    "\033[1;37m\033[1m",  # Trắng
+    "\033[1;32m\033[1m",  # Xanh lá
+    "\033[1;34m\033[1m",  # Xanh dương 
+    "\033[1m\033[38;5;51m",  # Xanh nhạt
+    "\033[1;31m\033[1m\033[1m",  # Đỏ
+    "\033[1;30m\033{1m",  # Xám
+    "\033[1;33m\033[1m",  # Vàng
+    "\033[1;35m\033[1m",  # Tím
+    "\033[32;5;245m\033[1m\033[38;5;39m",  # Màu đặc biệt
+]
+
+def thanhngang(so):
+    for i in range(so):
+        print(range+'\033[1;31m-',end ='')
+    print('')
+
+def kiem_tra_mang():
+    try:
+        socket.create_connection(("8.8.8.8", 53), timeout=3)
+    except OSError:
+        print("Mạng không ổn định hoặc bị mất kết nối. Vui lòng kiểm tra lại mạng.")
+
+kiem_tra_mang()
+
+def banner():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(Colorate.Diagonal(Colors.red_to_white, """
+  
+                      
+███╗   ██╗██████╗    ████████╗ ██████╗  ██████╗ ██╗     
+████╗  ██║██╔══██╗   ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
+██╔██╗ ██║██████╔╝█████╗██║   ██║   ██║██║   ██║██║     
+██║╚██╗██║██╔═══╝ ╚════╝██║   ██║   ██║██║   ██║██║     
+██║ ╚████║██║           ██║   ╚██████╔╝╚██████╔╝███████╗
+╚═╝  ╚═══╝╚═╝           ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝ 
+╠═══════════════════════════════════════════════╣
+║▶ Nhóm   :  https://zalo.me/g/vmugmo123        ║
+║▶ Zalo : 0394764859                         ║
+╚═══════════════════════════════════════════════╝
+
+"""))
 
 os.system('cls' if os.name== 'nt' else 'clear')
-print(banner)
-print("\033[1;39m╔═════════════════════════════════╗")
-print("\033[1;39m║     \033[1;36mĐĂNG NHẬP GOLIKE AUTH       \033[1;39m║")
-print("\033[1;39m╚═════════════════════════════════╝") 
+banner()
+sleep(1.2)
 
-    # Nhập auth
+    # Nhập auth golike
 try:
   Authorization = open("Authorization.txt","x")
   t = open("token.txt","x")
@@ -40,19 +178,31 @@ t = open("token.txt","r")
 author = Authorization.read()
 token = t.read()
 if author == "":
-  author = input("\033[1;32m 💸 NHẬP AUTHORIZATION GOLIKE : \033[1;33m")
-  token = input("\033[1;32m💸  NHẬP TOKEN (T CỦA GOLIKE): \033[1;33m")
+  author = input(Colorate.Diagonal(Colors.red_to_white," 💸 NHẬP AUTHORIZATION GOLIKE : \033[1;33m"))
+  token = input(Colorate.Diagonal(Colors.red_to_white,"💸  NHẬP TOKEN (T CỦA GOLIKE): \033[1;33m"))
   Authorization = open("Authorization.txt","w")
   t = open("token.txt","w")
   Authorization.write(author)
   t.write(token)
 else:
-  print(f"\033[1;32mNhập 1 để vào TOOL Golike SnapChat 💸🤑")
-  print(f"\033[1;96mHOẶC LÀ ")
-  select = input(f"\033[1;32mNhập AUTHORIZATION {Fore.CYAN}Ở đây \033[1;32mđể vào acc golike khác : \033[1;33m")
+  print(Colorate.Diagonal(Colors.white_to_black, "=================================================="))
+  print (Colorate.Diagonal(Colors.cyan_to_green, "Nhập [1] Để Vào Tool  "))
+  print (Colorate.Diagonal(Colors.cyan_to_green, "Nhập [2] Để Thay Auth Golike Mới "))
+  print(Colorate.Diagonal(Colors.white_to_black,"=================================================="))
+  
+  select = input(f"\033[1;32mNhập số : ")
+  kiem_tra_mang()
   if select != "1":
     author = select
-    token = input("\033[1;32m Nhập T : \033[1;33m")
+  if select == "2":
+    for i in range(1, 101):
+     sys.stdout.write(f"\r{BOLD}{AQUA} ĐANG TIẾN HÀNH XÓA AUTH CŨ : [{i}% {'║' * (i // 2)}]{RESET}")
+     sys.stdout.flush()
+     sleep(0.03)  # Điều chỉnh thời gian chờ nếu cần
+    os.system('cls' if os.name== 'nt' else 'clear')
+    print(banner)
+    author = input("\033[1;33mNhập Auth Golike Mới : ")
+    token = input("\033[1;32mNhập T Golike Mới : \033[1;33m")
     Authorization = open("Authorization.txt","w")
     t = open("token.txt","w")
     Authorization.write(author)
@@ -60,11 +210,9 @@ else:
 Authorization.close()
 t.close()
 os.system('cls' if os.name== 'nt' else 'clear')
-print(banner)
-print("\033[1;39m╔═════════════════════════════════════════════╗")
-print("\033[1;39m║   \033[1;36mDANH SÁCH ACC SNAPCHAT TRONG ACC GOLIKE   \033[1;39m║")
-print("\033[1;39m╚═════════════════════════════════════════════╝") 
-print(F"{Fore.MAGENTA}Lưu ý : làm tầm cỡ 5 job TIKTOK để có thể lấy dc job SNAPCHAT trước khi chạy Snap") 
+banner()
+print("\033[1;32mDanh Sách Acc Snap Hiện Có 🍉")
+print("\033[97m==================================")
 headers = {
     'Accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json;charset=utf-8',
@@ -74,15 +222,19 @@ headers = {
     'Referer': 'https://app.golike.net/account/manager/snapchat',
 }
 
-
+scraper = cloudscraper.create_scraper()
 def chonacc():
     json_data = {}
-    response = scraper.get(
+    try:
+      response = scraper.get(
         'https://gateway.golike.net/api/snapchat-account',
+    
         headers=headers,
         json=json_data
-    ).json()
-    return response
+     ).json()
+      return response
+    except Exception:
+      sys.exit()
 
 def nhannv(account_id):
     try:
@@ -90,7 +242,7 @@ def nhannv(account_id):
             'account_id': account_id,
             'data': 'null',
         }
-
+   
         response = scraper.get(
             'https://gateway.golike.net/api/advertising/publishers/snapchat/jobs',
             headers=headers,
@@ -98,9 +250,8 @@ def nhannv(account_id):
             json={}
         )
         return response.json()
-    except Exception as e:
-        print()
-        return {}
+    except Exception:
+      sys.exit()
 
 def hoanthanh(ads_id, account_id):
     try:
@@ -118,9 +269,8 @@ def hoanthanh(ads_id, account_id):
             timeout=6
         )
         return response.json()
-    except Exception as e:
-        print()
-        return {}
+    except Exception:
+      sys.exit()
 
 def baoloi(ads_id, object_id, account_id, loai):
     try:
@@ -128,7 +278,7 @@ def baoloi(ads_id, object_id, account_id, loai):
             'description': 'Tôi đã làm Job này rồi',
             'users_advertising_id': ads_id,
             'type': 'ads',
-            'provider': 'snapchat',
+            'provider': 'tiktok',
             'fb_id': account_id,
             'error_type': 6,
         }
@@ -147,171 +297,70 @@ def baoloi(ads_id, object_id, account_id, loai):
             headers=headers,
             json=json_data2,
         )
-    except Exception as e:
-        print()
+    except Exception:
+      sys.exit()
 
 # Gọi chọn tài khoản một lần và xử lý lỗi nếu có
-chontkSNAPCHAT = chonacc()
+chontktiktok = chonacc()
 
 def dsacc():
-    if chontkSNAPCHAT.get("status") != 200:
-        print("\033[1;31m Authorization hoặc Token sai 😠")
-        quit()
-
-    data = chontkSNAPCHAT.get("data", [])
-    if not data:
-        print("\033[1;33mKhông có tài khoản SNAPCHAT nào được tìm thấy.")
-        return
-
-    for i, acc in enumerate(data):
-        nickname = acc.get("name")
-        print(f'\033[1;36m[{i+1}]\033[1;93m {nickname} \033[1;97m|\033[1;31m✅\033[1;32m Online')
-
-dsacc()
-print(f"{Fore.MAGENTA}═══════════════════════════════════")
-
+  if chontktiktok.get("status") != 200:  
+    print("\033[1;31mAuthorization hoăc T sai 😂")
+    quit()
+  for i in range(len(chontktiktok["data"])):
+    print(Colorate.Diagonal(Colors.green_to_red,f"[{i+1}] {chontktiktok["data"][i]["name"]} | 🍉 Online"))
+dsacc() 
+print("\033[97m==================================")
 while True:
   try:
-    luachon = int(input("\033[1;32m Chọn tài khoản SNAPCHAT muốn làm nv : \033[1;33m"))
-    while luachon > len((chontkSNAPCHAT)["data"]):
-      luachon = int(input("\033[1;32m Acc Này Không Có Trong Danh Sách Cấu Hình , Nhập Lại : \033[1;33m"))
-    account_id = chontkSNAPCHAT["data"][luachon - 1]["id"]
+    luachon = int(input("\033[1;32mChọn tài khoản TIKTOK bạn muốn chạy 🤑: \033[1;33m"))
+    while luachon > len((chontktiktok)["data"]):
+      luachon = int(input("\033[1;31mAcc Này Không Có Trong Danh Sách Cấu Hình , Nhập Lại : \033[1;33m"))
+    account_id = chontktiktok["data"][luachon - 1]["id"]
     break  
   except:
-    print("\033[1;31mSai Định Dạng ") 
+    print("\033[1;31m Sai Định Dạng ") 
 while True:
   try:
-    delay = int(input(f"\033[1;32m Delay: \033[1;33m"))
+    os.system('cls' if os.name== 'nt' else 'clear')
+    delay = int(input(f"\033[1;32mDelay thực hiện job 🍉 : \033[1;33m"))
     break
   except:
-    print("\033[1;31mSai Định Dạng ")
-while True:
-  try: 
-    doiacc = int(input(f"\033[1;32mThất bại bao nhiêu lần thì đổi acc: \033[1;33m"))
-    break
-  except:
-    print("\033[1;31m Nhập Vào 1 Số ")  
-print("\033[1;35m╔═════════════════════════════════╗")
-print("\033[1;35m║     \033[1;33m 💸CHỌN LOẠI JOB      \033[1;35m║")
-print("\033[1;35m╚═════════════════════════════════╝")
-print("\033[1;36m[1] Job Follow 💸")
+    print("\033[1;31m Sai Định Dạng ")
+# Nhập proxy
+proxy_input = input("\033[1;32mNhập proxy (host:port hoặc user:pass@host:port), Enter nếu không dùng đến : \033[0m").strip()
+proxies = {
+    "http": f"http://{proxy_input}",
+    "https": f"http://{proxy_input}"
+} if proxy_input else None
+    
+print("\033[1;33m         CHỌN JOB ĐỂ LÀM KIẾM TIỀN")
+print("")
+print("\033[1;36mNhập \033[1;39m[\033[1;36m1\033[1;39m] Thực Hiện NV \033[1;33mFollow ➕ ")
 
 while True:
     try:
-        loai_nhiem_vu = int(input("\033[1;32m Chọn loại Job chạy : \033[1;33m"))
+        loai_nhiem_vu = int(input("\033[1;32mChọn loại nv cần kiếm tiền 🍉 : \033[1;33m "))
         if loai_nhiem_vu in [1]:
             break
         else:
-            print("\033[1;31mVui lòng chọn số từ 1 đến 3!")
+            print("\033[1;31mVui lòng chọn số từ 1")
     except:
         print("\033[1;31mSai định dạng! Vui lòng nhập số.")  
-
-x_follow, y_follow = None, None
-print("\033[1;39m╔═════════════════════════════════╗")
-print("\033[1;39m║       \033[1;36m💸 ADB 💸         \033[1;39m║")
-print("\033[1;39m╚═════════════════════════════════╝")
-print(f"\033[1;36m[1] Sử dụng (Trên ADR11)")
-print(f"\033[1;36m[2] Kh dùng,chỉ auto cilck ")
-adbyn = input(f"\033[1;32m Nhập lựa chọn: \033[1;33m")
-
-if adbyn == "1":
-    def setup_adb():
-      config_file = "adb_config.txt"
-      follow_coords_file = "toa_do_follow.txt"
-
-    # Nhập IP và port ADB
-      print(f"{Fore.MAGENTA}═══════════════════════════════════")
-      print("\033[1;33mBạn có thể xem video hướng dẫn kết nối ADB ở trên Youtube!!!")
-      ip = input("\033[1;32mNhập IP của thiết bị ví dụ (192.168.1.2): \033[1;33m")
-      adb_port = input("\033[1;32mNhập port của thiết bị ví dụ (39327): \033[1;33m")
-
-      # Kiểm tra và đọc tọa độ từ file nếu tồn tại
-      x_follow, y_follow = None, None
-    
-      if os.path.exists(follow_coords_file):
-          with open(follow_coords_file, "r") as f:
-               coords = f.read().split("|")
-               if len(coords) == 2:
-                   x_follow, y_follow = coords
-                   print(f"\033[1;32mĐã tìm thấy tọa độ nút follow: X={x_follow}, Y={y_follow}")
-      if not os.path.exists(config_file):
-           print("\033[1;36mLần đầu chạy, nhập mã ghép nối (6 SỐ) và port ghép nối.\033[0m")
-           pair_code = input("\033[1;32mNhập mã ghép nối 6 số ví dụ (322763): \033[1;33m")
-           pair_port = input("\033[1;32mNhập port ghép nối ví dụ (44832): \033[1;33m")
-
-           with open(config_file, "w") as f:
-               f.write(f"{pair_code}|{pair_port}")
-      else:
-          with open(config_file, "r") as f:
-               pair_code, pair_port = [s.strip() for s in f.read().split("|")]
   
-      print("\n\033[1;36m Đang ghép nối với thiết bị...\033[0m")
-      os.system(f"adb pair {ip}:{pair_port} {pair_code}")
-      time.sleep(2)
-  
-      print("\033[1;36m Đang kết nối ADB\033[0m")
-      os.system(f"adb connect {ip}:{adb_port}")
-      time.sleep(2)
-  
-      devices = os.popen("adb devices").read()
-      if ip not in devices:
-        print(f"{Fore.RED} Kết nối không thành công!{Fore.WHITE}")
-        exit()
-    
-
-       # Yêu cầu nhập tọa độ nếu chưa có
-      print("\033[1;35m╔═════════════════════════════════╗")
-      print("\033[1;35m║     \033[1;33m NHẬP TỌA ĐỘ.          \033[1;35m║")
-      print("\033[1;35m╚═════════════════════════════════╝")
-    
-      if loai_nhiem_vu in [1, 3] and (x_follow is None or y_follow is None):
-           x_follow = input("\033[1;32mNhập tọa độ X của nút follow: \033[1;33m")
-           y_follow = input("\033[1;32mNhập tọa độ Y của nút follow: \033[1;33m")
-           with open(follow_coords_file, "w") as f:
-               f.write(f"{x_follow}|{y_follow}")
-
-      return x_follow, y_follow
-
-# Khi gọi hàm setup_adb()
-    x_follow, y_follow = setup_adb()
-elif adbyn == "2":
-    pass
 # Thêm phần chọn loại nhiệm vụ sau khi chọn tài khoản và trước khi bắt đầu làm nhiệm vụ
    
 dem = 0
 tong = 0
-checkdoiacc = 0
 dsaccloi = []
 accloi = ""
 os.system('cls' if os.name== 'nt' else 'clear')
 
-print(banner)
-print("\033[1;35m╔═════════════════════════════════════════════╗")
-print("\033[1;35m║     \033[1;33mBắt Đầu Bú NV + Kiếm Tiền             \033[1;35m║")
-print("\033[1;35m╚═════════════════════════════════════════════╝")
-
+banner()
+print("")
 while True:
-    if checkdoiacc == doiacc:
-        dsaccloi.append(chontkSNAPCHAT["data"][luachon - 1]["nickname"])
-        print(f"{Fore.WHITE}════════════════════════════════════════════════════")
-        print(f"\033[1;31mAcc SNAPCHAT {dsaccloi} gặp vấn đề  !!!")
-        print(f"{Fore.WHITE}════════════════════════════════════════════════════")
-        dsacc()
-        while True:
-            try:
-                print(f"{Fore.WHITE}════════════════════════════════════════════════════")
-                luachon = int(input("\033[1;32mChọn tài khoản mới: \033[1;33m"))
-                while luachon > len((chontkSNAPCHAT)["data"]):
-                    luachon = int(input("\033[1;31m Acc Này Không Có Trong Danh Sách, Hãy Nhập Lại : \033[1;33m"))
-                account_id = chontkSNAPCHAT["data"][luachon - 1]["id"]
-                checkdoiacc = 0
-                os.system('cls' if os.name== 'nt' else 'clear')
-                for h in banner:
-                    print(h,end = "")
-                break  
-            except:
-                print("\033[1;31m Sai Định Dạng !!!")
-    print('\033[1;33mĐang get job,chờ chút...', end="\r")
+    
+    print('\033[1;35m ĐANG TÌM JOB KIẾM TIỀN 🍉 ', end="\r")
     max_retries = 3
     retry_count = 0
     nhanjob = None
@@ -335,37 +384,20 @@ while True:
     link = nhanjob["data"]["link"]
     object_id = nhanjob["data"]["object_id"]
     job_type = nhanjob["data"]["type"]
-    (job_type not in ["follow"])
-    baoloi(ads_id, object_id, account_id, job_type)
-
-    # Mở link và kiểm tra lỗi
-    try:
-        if adbyn == "1":
-            os.system(f'adb shell am start -a android.intent.action.VIEW -d "{link}" > /dev/null 2>&1')
-        else:
-            subprocess.run(["termux-open-url", link])
-        
-        for remaining in range(3, 0, -1):
-            time.sleep(1)
-        print("\r" + " " * 30 + "\r", end="")
-
-    except Exception as e:
+# Kiểm tra loại nhiệm vụ
+    if (loai_nhiem_vu == 1 and job_type != "follow") or \
+       (loai_nhiem_vu == 2 and job_type != "like") or \
+       (job_type not in ["follow", "like"]):
         baoloi(ads_id, object_id, account_id, job_type)
         continue
-
-    # Thực hiện thao tác ADB
-    if job_type == "follow" and adbyn == "1" and x_follow and y_follow:
-        os.system(f"adb shell input tap {x_follow} {y_follow}")
-
     # Đếm ngược delay
     for remaining_time in range(delay, -1, -1):
-        color = "\033[1;36m" if remaining_time % 2 == 0 else "\033[1;33m"
-        print(f"\r{color} 💸 PVN |NP-TOOL-V3| {remaining_time}s           ", end="")
+        color = "\033[1;35m" if remaining_time % 2 == 0 else "\033[1;36m"
+        print(f"\r{color} NP-TOOL Kiếm Tiền Online 🍉 [{remaining_time}s]   ", end="")
         time.sleep(1)
-    
     print("\r                          \r", end="") 
-    print("\033[1;36mĐang Nhận Tiền ,Chờ 1 Chút... 😆",end = "\r")
-
+    color = "\033[1;35m" if remaining_time % 2 == 0 else "\033[1;33m"
+    print(f"{color} Đang Nhận Tiền Lần 1 🍉... ",end = "\r")
     # Hoàn thành job
     max_attempts = 2
     attempts = 0
@@ -397,23 +429,32 @@ while True:
         if second < 10:
             s = "0" + str(second)
                                       
-        chuoi = (f"\033[1;35m[\033[1;31m{dem}\033[1;35m]"
-                f" \033[1;35m[\033[1;32mDc Tiền Rùi\033[1;35m]"
-                f" \033[1;35m[\033[38;2;0;180;255m{job_type}\033[1;35m]"
-                f" \033[1;35m[\033[1;33m+{tien}\033[1;35m]"
-                f" \033[1;35m[\033[1;33mTổng số tiền: {tong}\033[1;35m]"
-                f" \033[1;35m[\033[1;37mGiờ: {h}:{m}:{s}\033[1;35m]")
-                
-        print("                                                    ", end="\r")
-        print(chuoi)
+        thoigian = time.strftime("%H:%M:%S", time.localtime())
+        console = Console()                             
+        table = Table(show_header=True, header_style="bold magenta")
+        table.add_column("STT", style="bold yellow")
+        table.add_column("Thời gian", style="cyan")
+        table.add_column("Status", style="green")
+        table.add_column("Tiền ", style="bold green")
+        table.add_column("Tổng Tiền", style="bold white")
+        table.add_row(
+        str(dem),
+        thoigian,
+        "[green]SUCCESS[/green]",
+        f"[bold green]+{tien}đ",
+        f"[bold yellow]{tong} vnđ"
+    )
+
+        os.system('cls' if os.name == 'nt' else 'clear')
+        banner()
+        console.print(table)
         time.sleep(0.7)
         checkdoiacc = 0
     else:
         try:
             baoloi(ads_id, object_id, account_id, nhanjob["data"]["type"])
-            print("                                              ", end="\r")
-            print("\033[1;33mBỏ qua nhiệm vụ do lỗi hoặc job không tồn tại!!!", end="\r")
-            sleep(1)
+            print("\033[1;35m Bỏ qua job lỗi thành công 🍉", end="\r")
+            sleep(1.5)
             checkdoiacc += 1
         except:
             pass
