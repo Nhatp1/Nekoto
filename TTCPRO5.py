@@ -838,7 +838,7 @@ def Main():
                                     xu = "{:,}".format(int(xu))
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                    print(f"\033[1;31m|\033[1;31m{dem:04d}\033[1;31m|\033[1;36mPhuocDEV\033[1;31m|\033[1;32mLIKEVIP\033[1;31m|\033[1;35m+1100xu\033[1;31m|\033[1;35m{uid_hidden}\033[1;31m|\033[1;33m{xu}\033[1;31m|\033[1;34m{user}\033[1;31m|\033[1;36m{time}")
+                                    print(f"\033[1;31m|\033[1;31m{dem:04d}\033[1;31m|\033[1;36mNP-TOOL\033[1;31m|\033[1;32mLIKEVIP\033[1;31m|\033[1;35m+1100xu\033[1;31m|\033[1;35m{uid_hidden}\033[1;31m|\033[1;33m{xu}\033[1;31m|\033[1;34m{user}\033[1;31m|\033[1;36m{time}")
 				    
                                     if dem % doinick == 0:
                                         ptool = 1
