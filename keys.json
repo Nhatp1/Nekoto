@@ -1,11 +1,5 @@
 [
   {
-    "key": "JIMMY",
-    "expiry": "2099-12-31T23:59:59",
-    "type": "vip",
-    "device_id": "10439835036284"
-  }
-  {
     "key": "LENGHIA",
     "expiry": "2099-12-31T23:59:59",
     "type": "vip",
