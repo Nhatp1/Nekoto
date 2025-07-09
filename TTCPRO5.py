@@ -1,103 +1,43 @@
-# mở code
-import requests
-import sys 
-import base64
-import uuid
-import os
-import json
-import dns.resolver
-import socket
+import requests, base64, uuid, os, json
 from random import randint
 from pystyle import Write, Colors
-from bs4 import BeautifulSoup
 from datetime import datetime
 from time import sleep
-from random_user_agent.user_agent import UserAgent
-from random_user_agent.params import SoftwareName, OperatingSystem
-print("Chờ tí đi,đang load file và tool!!!")
-# Hiệu ứng tải
-for i in range(1, 101):
- sys.stdout.write(f"\r ĐANG LOAD FILE TOOL: {i}% {'█' * (i // 5)}")
- sys.stdout.flush()
- sleep(0.03)
+from colorama import Fore, init
+from pystyle import Write, Colors, Colorate
 
-
-def bes4(url):
-    try:
-        response = requests.get(url, timeout=5)
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.content, 'html.parser')
-            version_tag = soup.find('span', id='version')
-            maintenance_tag = soup.find('span', id='maintenance')
-            version = version_tag.text.strip() if version_tag else None
-            maintenance = maintenance_tag.text.strip() if maintenance_tag else None
-            return version, maintenance
-    except requests.RequestException:
-        return None, None
-    return None, None
-
-    print("Không thể lấy thông tin phiên bản hoặc tool đang được bảo trì.")
-    sys.exit()
-# Cấu hình DNS Resolver
-resolver = dns.resolver.Resolver(configure=False)
-resolver.nameservers = ['8.8.8.8']
-org_socket = socket.getaddrinfo
-def google_socket(host, port, family=0, type=0, proto=0, flags=0):
-    try:
-        info = resolver.resolve(host)
-        ip_address = info[0].to_text()
-        return org_socket(ip_address, port, family, type, proto, flags)
-    except:
-        return org_socket(host, port, family, type, proto, flags)
-socket.getaddrinfo = google_socket
-# Thiết lập User-Agent ngẫu nhiên
-software_names = [SoftwareName.CHROME.value]
-operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value]   
-user_agent_rotator = UserAgent(software_names=software_names, operating_systems=operating_systems, limit=100)
 os.system('cls' if os.name=='nt' else 'clear')
-listck = []
-listjob = []
-thanh = f'[</>] =>'
-def thanhngang(so):
-    for i in range(so):
-        print('═',end ='')
-    print('')
-# Màu sắc cho hiển thị
-xnhac = "\033[1;36m"
-do = "\033[1;31m"
+red = "\033[1;31m"
 luc = "\033[1;32m"
 vang = "\033[1;33m"
-RESET = "\033[0m"
-BOLD = "\033[1m"
-CYAN = "\033[96m"
-MAGENTA = "\033[95m"
-YELLOW = "\033[93m"
-GREEN = "\033[92m"
-BLUE = "\033[94m"
-AQUA = "\033[96m"
-LIME = "\033[92m"
-xduong = "\033[1;34m"
-hong = "\033[1;35m"
-trang = "\033[1;39m"
-end = '\033[0m'
+cam = "\033[38;5;208m"
+tim = "\033[1;35m"
+lam = "\033[1;36m"
+trang = "\033[1;37m"
+listck = []
+listjob = []
+
 def banner():
-    os.system("cls" if os.name == "nt" else "clear")
-    banner = f"""
-\033[32;5;245m\033[1m\033[38;5;39m███╗   ██╗██████╗    ████████╗ ██████╗  ██████╗ ██╗     
-\033[32;5;245m\033[1m\033[38;5;39m████╗  ██║██╔══██╗   ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
-\033[32;5;245m\033[1m\033[38;5;39m██╔██╗ ██║██████╔╝█████╗██║   ██║   ██║██║   ██║██║     
-\033[32;5;245m\033[1m\033[38;5;39m██║╚██╗██║██╔═══╝ ╚════╝██║   ██║   ██║██║   ██║██║     
-\033[32;5;245m\033[1m\033[38;5;39m██║ ╚████║██║           ██║   ╚██████╔╝╚██████╔╝███████╗
-\033[32;5;245m\033[1m\033[38;5;39m╚═╝  ╚═══╝╚═╝           ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
-\033[1;36m╠═══════════════════════════════════════════════╣
-\033[1;36m║\033[38;5;204m▶ \033[38;5;204mNhóm   : \033[38;5;20mhttps://zalo.me/g/vmugmo123        \033[1;36m║
-\033[1;36m║\033[38;5;204m▶ \033[38;5;204mZalo : \033[38;5;1204m0394764859                          \033[1;36m║
-\033[1;36m║\033[38;5;204m▶ \033[38;5;204mTool Do Tao Code 😆                      \033[1;36m║
-\033[1;36m║\033[38;5;204m▶ \033[38;5;204mMay Anh Dung Bug Tool Em 😭                \033[1;36m║
-\033[1;36m║\033[38;5;204m▶ \033[38;5;204mPhiên Bản Tool : 1.0 ( VIP )                 \033[1;36m║
-\033[1;36m╚═══════════════════════════════════════════════╝                                                        
-"""
-    print(banner)    
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(Colorate.Diagonal(Colors.green_to_red, """
+    
+███╗   ██╗██████╗    ████████╗ ██████╗  ██████╗ ██╗     
+████╗  ██║██╔══██╗   ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
+██╔██╗ ██║██████╔╝█████╗██║   ██║   ██║██║   ██║██║     
+██║╚██╗██║██╔═══╝ ╚════╝██║   ██║   ██║██║   ██║██║     
+██║ ╚████║██║           ██║   ╚██████╔╝╚██████╔╝███████╗
+╚═╝  ╚═══╝╚═╝           ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
+╠═══════════════════════════════════════════════╣
+║▶ Nhóm   : https://zalo.me/g/vmugmo123              ║
+║▶ Zalo : 0394764859                        ║
+║▶ Tool Do Tao Code 😆                     ║
+║▶ May Anh Dung Bug Tool Em 😭              ║
+║▶ Phiên Bản Tool : 1.0 ( VIP )                 ║
+╚═══════════════════════════════════════════════╝                                                        
+
+"""))
+
+    
 def getjob(cookie, nv):
     headers = {
         "Host":"tuongtaccheo.com",
@@ -108,44 +48,50 @@ def getjob(cookie, nv):
     }
     get = requests.get(f'https://tuongtaccheo.com/kiemtien/{nv}/getpost.php',headers=headers)
     return get
+
 def decode_base64(encoded_str):
 	decoded_bytes = base64.b64decode(encoded_str)
 	decoded_str = decoded_bytes.decode('utf-8')
 	return decoded_str
+
 def _encode_to_base64(_data):
 	byte_representation = _data.encode('utf-8')
 	base64_bytes = base64.b64encode(byte_representation)
 	base64_string = base64_bytes.decode('utf-8')
 	return base64_string
+
 def _delay(value):
 	while not(value <= 1):
 		value -= 0.123
-		print(f'''\033[1;39m[\033[1;36NP-TOOL\033[1;32m][ \033[1;36mDELAY \033[1;35m][\033[1;36m{str(value)[0:5]}\033[1;36m][\033[1;33m|\033[1;39m ]''', '               ', end = '\r')
-		sleep(0.010)
-		print(f'''\033[1;39m[\033[1;36NP-TOOL\033[1;32m][ \033[1;36mDELAY \033[1;35m][\033[1;36m{str(value)[0:5]}\033[1;36m[\033[1;33m-\033[1;39m]''', '               ', end = '\r')
-		sleep(0.010)
-		print(f'''\033[1;39m[\033[1;36NP-TOOL\033[1;32m][ \033[1;36mDELAY \033[1;35m][\033[1;36m{str(value)[0:5]}\033[1;36m[\033[1;33m/\033[1;39m]''', '               ', end = '\r')
-		sleep(0.010)
-		print(f'''\033[1;39m[\033[1;36NP-TOOL\033[1;32m][ \033[1;36mDELAY \033[1;35m][\033[1;36m{str(value)[0:5]}\033[1;36m[\033[1;33m-033[1;39m]''', '               ', end = '\r')
-		sleep(0.010)
-		print(f'''\033[1;39m[\033[1;36NP-TOOL\033[1;32m][ \033[1;36mDELAY \033[1;35m][\033[1;36m{str(value)[0:5]}\033[1;36m[\033[1;33m|\033[1;39m]''', '               ', end = '\r')
-		sleep(0.010)
+		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}DELAY\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
+		sleep(0.02)
+		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}DELAY\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
+		sleep(0.02)
+		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}DELAY\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
+		sleep(0.02)
+		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}DELAY\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
+		sleep(0.02)
+		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}DELAY\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
+		sleep(0.02)
+
 def countdown(value):
 	while not(value <= 1) :
 		value -= 0.123
-		print(f'''\033[1;39m[\033[1;36NP-TOOL\033[1;32m][ \033[1;36mDELAY \033[1;35m][\033[1;36m{str(value)[0:5]}\033[1;39m[\033[1;33mX    \033[1;39m]''', '               ', end = '\r')
-		sleep(0.01)
-		print(f'''\033[1;39m[\033[1;36NP-TOOL\033[1;32m][ \033[1;36mDELAY \033[1;35m][\033[1;36m{str(value)[0:5]}\033[1;39m[\033[1;33m X   \033[1;39m]''', '               ', end = '\r')
-		sleep(0.01)
-		print(f'''\033[1;39m[\033[1;36NP-TOOL\033[1;32m][ \033[1;36mDELAY \033[1;35m][\033[1;36m{str(value)[0:5]}\033[1;39m[\033[1;33m  X  \033[1;39m]''', '               ', end = '\r')
-		sleep(0.01)
-		print(f'''\033[1;39m[\033[1;36NP-TOOL\033[1;32m][ \033[1;36mDELAY \033[1;35m][\033[1;36m{str(value)[0:5]}\033[1;39m[\033[1;33m   X \033[1;39m]''', '               ', end = '\r')
-		sleep(0.01)
-		print(f'''\033[1;39m[\033[1;36NP-TOOL\033[1;32m][ \033[1;36mDELAY \033[1;35m][\033[1;36m{str(value)[0:5]}\033[1;39m[\033[1;33m    X\033[1;39m]''', '               ', end = '\r')
-		sleep(0.01)
+		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}COUNTDOWN\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
+		sleep(0.02)
+		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}COUNTDOWN\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
+		sleep(0.02)
+		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}COUNTDOWN\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
+		sleep(0.02)
+		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}COUNTDOWN\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
+		sleep(0.02)
+		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}COUNTDOWN\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
+		sleep(0.02)
+
 def chongblock(delaybl):
 	for i in range(delaybl, -1, -1):
-		Write.Print(f'\033[1;31mĐang nghĩ chạy, sẽ chạy lại sau {i} giây... \r',interval=0.0001);sleep(1); print('                                                        ', end = '\r')
+		Write.Print(f'Đang chống block chạy lại sau {i} giây  \r',Colors.rainbow,interval=0.0001);sleep(1); print('                                                        ', end = '\r')
+
 def _Infofb(cookie):
     heads={
         "accept": "*/*",
@@ -176,12 +122,9 @@ def _Infofb(cookie):
         return [_fb1, _idfb, _name]
     except:
         return False
+    
 def _Like(cookie, uid, type, fb1, idfb):
-    try:
-        if not uid:
-            print("\033[1;32mLỗi\033[1;39m: \033[1;32muid không hợp lệ, bỏ qua nhiệm vụ này")
-            return False  # Bỏ qua nhiệm vụ nếu UID không hợp lệ
-        headers = {
+    headers = {
         "accept": "*/*", 
         "accept-language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7", 
         "content-type": "application/x-www-form-urlencoded", 
@@ -199,7 +142,7 @@ def _Like(cookie, uid, type, fb1, idfb):
         "x-fb-friendly-name": "CometUFIFeedbackReactMutation", 
         "x-fb-lsd": "7_RkODA0fo-6ShZlbFpHEW"
     }
-        _reac = {
+    _reac = {
         "LIKE": "1635855486666999",
         "LOVE": "1678524932434102",
         "CARE": "613557422527858",
@@ -208,8 +151,8 @@ def _Like(cookie, uid, type, fb1, idfb):
         "SAD": "908563459236466",
         "ANGRY": "444813342392137"
     }
-        _id_reac = _reac.get(type)
-        _data = {
+    _id_reac = _reac.get(type)
+    _data = {
         'av': idfb,
         '__usid': r'6-Tsfgotwhb2nus:Psfgosvgerpwk:0-Asfgotw11gc1if-RV=6:F=',
         '__aaid': '0',
@@ -236,21 +179,16 @@ def _Like(cookie, uid, type, fb1, idfb):
         'server_timestamps': 'true',
         'doc_id': '7047198228715224',
     }
-        cookies = {
+    cookies = {
         "cookie": cookie
     }
-        _get = requests.post("https://www.facebook.com/api/graphql/",headers=headers, cookies=cookies, params=_data)       
-        if '{"data":{"feedback_react":{"feedback":{"id":' in _get.text:
-            return True
-        else:
-            return False
-    except Exception as e:
-            print(f"\033[1;32mLỗi trong _Like: {e}")
-            return False
-def _React_Cmt(cookie, idfb, fb1, uid, type):
-    if not uid:
-        print("\033[1;32mLỗi\033[1;39m: \033[1;32mUID không hợp lệ")
+    _get = requests.post("https://www.facebook.com/api/graphql/",headers=headers, cookies=cookies, params=_data)
+    if '{"data":{"feedback_react":{"feedback":{"id":' in _get.text:
+        return True
+    else:
         return False
+    
+def _React_Cmt(cookie, idfb, fb1, uid, type):
     _reac = {
         "LIKE": "1635855486666999",
         "LOVE": "1678524932434102",
@@ -319,12 +257,9 @@ def _React_Cmt(cookie, idfb, fb1, uid, type):
         return True
     else:
         return False
+    
 def _Follow(cookie, idfb, fb1, uid):
-    try:
-        if not uid:
-            print("\033[1;32mLỗi\033[1;39m: \033[1;32muid không hợp lệ")
-            return False  # Bỏ qua nếu UID không hợp lệ 
-        headers = {
+    headers = {
         "accept": "*/*", 
         "accept-language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7", 
         "content-type": "application/x-www-form-urlencoded", 
@@ -341,7 +276,7 @@ def _Follow(cookie, idfb, fb1, uid):
         "x-fb-friendly-name": "CometUserFollowMutation", 
         "x-fb-lsd": "7_RkODA0fo-6ShZlbFpHEW"
     }
-        _data = {
+    _data = {
         'av': idfb,
         '__aaid': '0',
         '__user': idfb,
@@ -368,23 +303,17 @@ def _Follow(cookie, idfb, fb1, uid):
         'server_timestamps': 'true',
         'doc_id': '25581663504782089',
     }
-        cookies = {
+    cookies = {
         "cookie": cookie
     }
-        _Post = requests.post("https://www.facebook.com/api/graphql/", headers=headers, cookies=cookies, params=_data)
-        if '"subscribe_status":"IS_SUBSCRIBED"' in _Post.text:
-            return True
-        else:
-            return False
-    except Exception as e:
-        print(f"\033[1;32mLỗi trong _Follow: {e}")
+    _Post = requests.post("https://www.facebook.com/api/graphql/", headers=headers, cookies=cookies, params=_data)
+    if '"subscribe_status":"IS_SUBSCRIBED"' in _Post.text:
+        return True
+    else:
         return False
-def _CMT(cookie, id, idfb, fb1, msg: str):
-    try:
-        if not id:
-            print("\033[1;32mLỗi\033[1;39m: \033[1;32mID bài viết không hợp lệ, bỏ qua nhiệm vụ bình luận")
-            return False
-        headers = {
+    
+def CMT(cookie, id, idfb, fb1, msg:str):
+    headers = {
         "accept": "*/*",
         "accept-language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7",
         "content-type": "application/x-www-form-urlencoded", 
@@ -402,7 +331,7 @@ def _CMT(cookie, id, idfb, fb1, msg: str):
         "x-fb-friendly-name": "CometUFIFeedbackReactMutation", 
         "x-fb-lsd": "7_RkODA0fo-6ShZlbFpHEW"
     }
-        _data = {
+    _data = {
         'av': idfb,
         '__aaid': '0',
         '__user': idfb,
@@ -428,29 +357,24 @@ def _CMT(cookie, id, idfb, fb1, msg: str):
         'server_timestamps': 'true',
         'doc_id': '7994085080671282',
     }
-        cookies = {
+    cookies = {
         "cookie": cookie
     }
-        _get = requests.post("https://www.facebook.com/api/graphql/",headers=headers, cookies=cookies, params=_data)
-        if '"errors"' not in _post.text:
-           return True  # Bình luận thành công
-        else:
-           return False  # Bình luận thất bại
-    except Exception as e:
-        print(f"\033[1;32mLỗi trong _CMT\033[1;39m: \033[1;32m{e}")
-        return False
-def _Page(cookie, idfb, fb1, id):
     try:
-        uid = None  # Giá trị mặc định
-        if id and '_' in id:
-            uid = id.split('_')[1]
-        elif id:
-            uid = id
-        if uid is None:
-            print("\033[1;32mLỗi\033[1;39m: \033[1;32mUID không hợp lệ, bỏ qua nhiệm vụ này")
-            return False  # Bỏ qua nếu UID không hợp lệ
-        # (Tiếp tục code thực hiện PAGE...)               
-        headers = {
+        _get = requests.post("https://www.facebook.com/api/graphql/",headers=headers, cookies=cookies, params=_data)
+        if '"errors"' not in _get.text:
+            return True
+        else:
+            return False
+    except:
+        return False
+    
+def _Page(cookie, idfb, fb1, id):
+    if '_' in id:
+        uid = id.split('_')[1]
+    else:
+        uid = id
+    headers = {
         "accept": "*/*", 
         "accept-language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7", 
         "content-type": "application/x-www-form-urlencoded", 
@@ -467,7 +391,7 @@ def _Page(cookie, idfb, fb1, id):
         "x-fb-friendly-name": "CometUserFollowMutation", 
         "x-fb-lsd": "7_RkODA0fo-6ShZlbFpHEW"
     }
-        _data = {
+    _data = {
         'av': idfb,
         '__aaid': '0',
         '__user': idfb,
@@ -494,21 +418,17 @@ def _Page(cookie, idfb, fb1, id):
         'server_timestamps': 'true',
         'doc_id': '6716077648448761',
     }
-        cookies = {
+    cookies = {
         "cookie": cookie
     }
-        _Post = requests.post("https://www.facebook.com/api/graphql/", headers=headers, cookies=cookies, params=_data)
-        if '"subscribe_status":"IS_SUBSCRIBED"' in _Post.text:
-            return True
-    except Exception as e:
-        print(f"\033[1;32mLỗi trong _Page: {e}")
-        return False  # Không dừng chương trình    
+    _Post = requests.post("https://www.facebook.com/api/graphql/", headers=headers, cookies=cookies, params=_data)
+    if '"subscribe_status":"IS_SUBSCRIBED"' in _Post.text:
+        return True
+    else:
+        return False
+    
 def _Share(cookie, idfb, fb1, uid):
-    try:
-        if not id:
-            print("\033[1;32mLỗi\033[1;39m: \033[1;32mID bài viết không hợp lệ, bỏ qua nhiệm vụ share")
-            return False
-        headers = {
+    headers = {
         "accept": "*/*", 
         "accept-language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7", 
         "content-type": "application/x-www-form-urlencoded", 
@@ -526,7 +446,7 @@ def _Share(cookie, idfb, fb1, uid):
         "x-fb-friendly-name": "CometUFIFeedbackReactMutation", 
         "x-fb-lsd": "5dCcoMgOrU5CgUwl77gn-C"
     }
-        _data = {
+    _data = {
         'av': idfb,
         '__usid': r'6-Tsftw3x1vqj8dz:Psftw2g2c595x:0-Asftw3x1etit7l-RV=6:F=',
         '__aaid': '0',
@@ -554,17 +474,15 @@ def _Share(cookie, idfb, fb1, uid):
         'server_timestamps': 'true',
         'doc_id': '8167261726632010'
     }
-        cookies = {
+    cookies = {
         "cookie": cookie
     }
-        _post = requests.post("https://www.facebook.com/api/graphql/",headers=headers, cookies=cookies, params=_data)
-        if '"errors"' not in _post.text:
-            return True
-        else:
-            return False
-    except Exception as e:
-        print(f"\033[1;32mLỗi trong _Share\033[1;39m: \033[1;32m{e}")
-        return False    
+    _post = requests.post("https://www.facebook.com/api/graphql/",headers=headers, cookies=cookies, params=_data)
+    if '"errors"' not in _post.text:
+        return True
+    else:
+        return False
+    
 def _Bypass(cookie, idfb, fb1):
     headers = {
         "accept": "*/*", 
@@ -614,24 +532,26 @@ def _Bypass(cookie, idfb, fb1):
     }
     bypass = requests.post('https://www.facebook.com/api/graphql/',headers=headers, cookies=cookies, params=data)
     return bypass.text
+
 def Nhap_Cookie():
     demck = 0
     listck = []
     while True:
         demck += 1
-        ck = input(f'\033[1;32mNhập Cookie Facebook Thứ \033[1;33m{demck}\033[1;39m:\033[1;33m ')
+        ck = input(f'\033[38;5;208mNhập Cookie Facebook Thứ {vang}{demck}: {lam} ')
         if ck == '' and demck > 1:
             break
         _info = _Infofb(ck)
         if _info == False:
-            print('\033[1;32mCookie Facebook Ngủm ! Vui Lòng Nhập Lại Cookie !!!')
+            print(f'{Fore.RED}208mCookie Facebook Die, Vui Lòng Nhập Lại!!!')
             demck-=1
         else:
-            print("\033[1;39m═"*55)
-            print(f'\033[1;32mUID FB: \033[1;35m{_info[1]} | \033[1;32mNAME FB: \033[1;35m{_info[2]}')
-            print("\033[1;39m═"*55)
+            print(f"{red}════════════════════════════════════════════════════")
+            print(f'{cam}UID FACEBOOK: {vang}{_info[1]} {red}| {cam}NAME FACEBOOK: {vang}{_info[2]}')
+            print(f"{red}════════════════════════════════════════════════════")
             listck.append(ck)
     return listck
+
 def Main():
     dem = 0
     ptool = 0
@@ -644,22 +564,20 @@ def Main():
             if login.json()['status'] == 'success':
                 cookie = 'PHPSESSID='+(login.cookies)['PHPSESSID']
                 user = login.json()['data']['user']
-                print("\033[1;36m═"*55)
-                print(f'\033[1;32mNhập \033[1;33m[\033[1;33m1\033[1;31m] \033[1;32mĐể log vào acc \033[1;35m{user} 💸')
-                print(f'\033[1;32mNhập \033[1;31m[\033[1;33m2\033[1;31m] \033[1;32mĐể nhập access token mới💸')
-                print("\033[1;36m═"*55)
-                chon = Write.Input(f'Nhập Lựa Chọn : ',Colors.blue,interval=0.0001)
+                print(f'{vang}[{trang}1{vang}] {cam} {cam}vào tài khoản {lam}{user}')
+                print(f'{vang}[{trang}2{vang}] {cam} {cam}Nhập Access_Token TTC mới')
+                chon = Write.Input(f'Lựa Chọn Của Bạn: ',Colors.green_to_yellow,interval=0.0001)
                 if chon == '2':
                     os.remove('configttc.txt')
                 elif chon == '1':
                     pass
                 else:
-                    print(f'\033[1;36mMắt mù hay gì mà nhập sai?!')
+                    print(f'{red}Lựa chọn không xác định !!!')
                     continue
             else:
                 os.remove('configttc.txt')
         if not os.path.exists('configttc.txt'):
-            tk = input(f'\033[1;35mAccess Token TTC Đê:\033[1;35m')
+            tk = input(f'{cam}Nhập Access_token TTC{trang}: ')
             with open('configttc.txt', 'w') as f:
                 f.write(tk)
         with open('configttc.txt', 'r') as f:
@@ -669,30 +587,29 @@ def Main():
             cookie = 'PHPSESSID='+(login.cookies)['PHPSESSID']
             user = login.json()['data']['user']
             sodu = login.json()['data']['sodu']
-            sodu = "{:,}".format(int(sodu))
-            print("═"*55)
-            print(f"\033[1;32mTên TK TTC \033[1;39m: \033[1;33m{user} \033[1;31m| \033[1;32mXu Hiện Tại Đang Có \033[1;32m: \033[1;33m{sodu}")
-            print("\033[1;36m═"*55)
+            print(f"{red}════════════════════════════════════════════════════")
+            print(f"{cam}Tài Khoản: {lam}{user} {cam}| {cam}Xu Hiện Tại: {lam}{sodu}")
+            print(f"{red}════════════════════════════════════════════════════")
             break
         else:
             os.remove ('configttc.txt')
             continue
     while True:
         if os.path.exists('Cookie_FB.txt'):
-            print(f'\033[1;32mNhập \033[1;31m[\033[1;33m1\033[1;31m] \033[1;32mĐể Dùng Cookie Trước!!🔫')
-            print(f'\033[1;32mNhập \033[1;31m[\033[1;33m2\033[1;31m] \033[1;32mĐể Nhập Lại Cookie Khác!🔫')
-            chon = Write.Input(f'Nhập Lựa Chọn :',Colors.green,interval=0.0001)
+            print(f'{vang}[{trang}1{vang}] {cam}Sử Dụng Cookie Facebook Đã Lưu')
+            print(f'{vang}[{trang}2{vang}] {cam}Nhập Cookie Facebook Mới')
+            chon = Write.Input(f'Lựa Chọn Của Bạn: ',Colors.green_to_yellow,interval=0.0001)
             if chon == '1':
-                print('\033[1;32mĐang Lấy Dữ Liệu Đã Lưu...')
+                print('\033[38;5;208mĐang Lấy Dữ Liệu Đã Lưu')
                 sleep(1)
                 with open('Cookie_FB.txt', 'r') as f:
                     listck = json.loads(f.read())
                     break
             elif chon == '2':
-                print("═"*55)
+                print(f"{red}════════════════════════════════════════════════════")
                 os.remove('Cookie_FB.txt')
             else:
-                print(f'\033[1;32mLựa Chọn Không Xác Định.')
+                print(f'{red}Lựa Chọn Không Xác Định.')
                 continue
         if not os.path.exists('Cookie_FB.txt'):
             listck = Nhap_Cookie()
@@ -700,42 +617,21 @@ def Main():
                 json.dump(listck, f)
                 break
     banner()
-    print("\033[1;35m═"*55)
-    print(f"\033[1;32mTên TK TTC: \033[1;33m{user} \033[1;31m| \033[1;32mXu Hiện Tại Đang Có: \033[1;39m{sodu} ")
-    print("\033[1;35m═"*55)
-    print (Colorate.Diagonal(Colors.black_to_white,"═══════════════════════════════════════"))
-    print(f"\033[1;32mTên Tài Khoản: \033[1;33m{user} \033[1;31m| \033[1;32mXu Hiện Tại: \033[1;33m{sodu} ")
-    print (Colorate.Diagonal(Colors.black_to_white,"═══════════════════════════════════════"))
-    print(Colorate.Diagonal(Colors.green_to_red,f"NHẬP [ 1 ]  ĐỂ CHẠY NHIỆM VỤ LIKEVIP"))
-    print(Colorate.Diagonal(Colors.green_to_red,f"NHẬP [ 2 ]  ĐỂ CHẠY NHIỆM VỤ LIKETHUONG"))
-    print(Colorate.Diagonal(Colors.green_to_red,f"NHẬP [ 3 ]  ĐỂ CHẠY NHIỆM VỤ REACTION XU CAO"))
-    print(Colorate.Diagonal(Colors.green_to_red,f"NHẬP [ 4 ]  ĐỂ CHẠY NHIỆM VỤ REACTIONTHUONG"))
-    print(Colorate.Diagonal(Colors.green_to_red,f"NHẬP [ 5 ]  ĐỂ CHẠY NHIỆM VỤ REACTION CMT "))
-    print(Colorate.Diagonal(Colors.green_to_red,f"NHẬP [ 6 ]  ĐỂ CHẠY NHIỆM VỤ COMMENTCHEO"))
-    print(Colorate.Diagonal(Colors.green_to_red,f"NHẬP [ 7 ]  ĐỂ CHẠY NHIỆM VỤ SHARECHEO"))
-    print(Colorate.Diagonal(Colors.green_to_red,f"NHẬP [ 8 ]  ĐỂ CHẠY NHIỆM VỤ LIKEPAGRCHEO"))
-    print(Colorate.Diagonal(Colors.green_to_red,f"NHẬP [ 9 ]  ĐỂ CHẠY NHIỆM VỤ FOLLOWCHEO"))
-    print(Colorate.Diagonal(Colors.red_to_green,f"Có Thể Chọn Nhiều Nhiệm Vụ VD: 123...)  "))
-    print (Colorate.Diagonal(Colors.black_to_white,"═══════════════════════════════════════"))
-    nhiemvu = input(Colorate.Diagonal(Colors.green_to_red,f"Nhập Số : "))
-    min = input(Colorate.Diagonal(Colors.green_to_red,f"Nhập Delay Nhỏ Nhất ( Min ): "))
-    max = input(Colorate.Diagonal(Colors.green_to_red,f"Nhập Delay Cao Nhất ( Max ): "))
-    nvblock = int(input(Colorate.Diagonal(Colors.green_to_red, "Nhập Số NV Chống Block : ")))
-    delaybl = input(Colorate.Diagonal(Colors.green_to_red, "Sau {nvblock} Giây Chống Block : "))
-    doinick = input(Colorate.Diagonal(Colors.green_to_red, "Sau Bao Nhiêu NV Đổi Acc : "))
-    nhiemvuloi = input(Colorate.Diagonal(Colors.green_to_red, "Lỗi Bao Nhiêu NV Thì Xóa Cookie : "))
-    print (Colorate.Diagonal(Colors.black_to_white,"═══════════════════════════════════════"))
-    nhiemvu = input(Colorate.Diagonal(Colors.green_to_red,f"Nhập Số : "))
-    min = input(Colorate.Diagonal(Colors.green_to_red,f"Nhập Delay Nhỏ Nhất ( Min ): "))
-    max = input(Colorate.Diagonal(Colors.green_to_red,f"Nhập Delay Cao Nhất ( Max ): "))
-    nvblock = int(input(Colorate.Diagonal(Colors.green_to_red, "Nhập Số NV Chống Block : ")))
-    delaybl = input(Colorate.Diagonal(Colors.green_to_red, "Sau {nvblock} Giây Chống Block : "))
-    doinick = input(Colorate.Diagonal(Colors.green_to_red, "Sau Bao Nhiêu NV Đổi Acc : "))
-    nhiemvuloi = input(Colorate.Diagonal(Colors.green_to_red, "Lỗi Bao Nhiêu NV Thì Xóa Cookie : "))
-    print (Colorate.Diagonal(Colors.black_to_white,"═══════════════════════════════════════"))
+    print(f"{red}════════════════════════════════════════════════════")
+    print(f"{cam}Tên Tài Khoản: {lam}{user} {cam}| {cam}Xu Hiện Tại: {lam}{sodu}")
+    print(f"{red}════════════════════════════════════════════════════")
+    Write.Print('''[1] - LIKEVIP\n[2] - LIKETHUONG\n[3] - REACTIONVIP\n[4] - REACTION\n[5] - REACTIONCMT\n[6] - CMTCHEO\n[7] - SHARE\n[8] - LIKEPAGE\n[9] - FOLLOW\n🌟 Lưu Ý: Có Thể Chọn Nhiều Nhiệm Vụ (VD: 123...)\n''',Colors.rainbow,interval=0.0001)
+    print(f"{red}════════════════════════════════════════════════════")
+    nhiemvu = input (f'\033[38;5;208mNhập Nhiệm Vụ Cần Chạy: {lam}')
+    min = int(input(f'\033[38;5;208mNhập Delay Min: {lam}'))
+    max = int(input(f'\033[38;5;208mNhập Delay Max: {lam}'))
+    nvblock = int(input(f'\033[38;5;208mSau Bao Nhiêu Nhiệm Vụ Thì Chống Block: {lam}'))
+    delaybl = int(input(f'\033[38;5;208mSau {lam}{nvblock} \033[38;5;208mNhiệm Vụ Thì Nghỉ Ngơi: {lam}'))
+    doinick = int(input(f'\033[38;5;208mSau Bao Nhiêu Nhiệm Vụ Thì Đổi Nick: {lam}'))
+    nhiemvuloi = int(input(f'\033[38;5;208mLỗi Bao Nhiêu Nhiệm Vụ Thì Xóa Cookie: {lam}'))
     while True:
         if len(listck) == 0:
-            print(f'\033[1;35mĐã Xoá Tất Cả Cookie, \033[1;36mVui Lòng Nhập Lại Cookie Khác!!!')
+            print(f'{red}Đã Xoá Tất Cả Cookie, Vui Lòng Nhập Lại')
             listck = Nhap_Cookie()
             with open('Cookie_FB.txt', 'w') as f:
                 json.dump(listck, f)
@@ -747,7 +643,7 @@ def Main():
                 tenfb = _info[2]
             else:
                 uidfb = ck.split('c_user=')[1].split(';')[0]
-                print(f'\033[1;32mCookie Tài Khoản \033[1;33m{uidfb} \033[1;32mDie', end='\r');sleep(3); print('                                     ', end = '\r' )
+                print(f'{red}Cookie Tài Khoản {uidfb} Die', end='\r');sleep(3); print('                                     ', end = '\r' )
                 listck.remove(ck)
                 continue
             headers = {
@@ -765,11 +661,13 @@ def Main():
             }
             cauhinh = requests.post('https://tuongtaccheo.com/cauhinh/datnick.php',headers=headers, data=data, timeout=5).text
             if '1' in cauhinh:
-                print(f"\033[1;32mĐang Chạy UID FB\033[1;39m: \033[1;33m{uidfb} \033[1;31m| \033[1;32mTên FB\033[1;39m: \033[1;33m{tenfb}")
+                print(f"{red}════════════════════════════════════════════════════")
+                print(cam+f" Chạy UID FB: {lam}{uidfb} {cam}| {cam}FB: {lam}{tenfb}")
+                print(f"{red}════════════════════════════════════════════════════")
             else:
-                print("\033[1;39m═"*55)
-                print(f"\033[1;32mCấu Hình Không Thành Công UID FB\033[1;39m: \033[1;33m{uidfb} \033[1;31m| \033[1;32mTên FB\033[1;39m: \033[1;33m{tenfb}")
-                print("\033[1;39m═"*55)
+                print(f"{red}════════════════════════════════════════════════════")
+                print(cam+f" Cấu Hình Thất Bại UID FB: {lam}{uidfb} {cam}| {cam}Tên FB: {lam}{tenfb}")
+                print(f"{red}════════════════════════════════════════════════════")
                 continue
             ptool = 0
             while True:
@@ -781,36 +679,36 @@ def Main():
                 nvcmt = 1 if '6' in nhiemvu else 0
                 nvshare = 1 if '7' in nhiemvu else 0
                 nvlikepage = 1 if '8' in nhiemvu else 0
-                nvfollow = 1 if '9' in nhiemvu else 0               
+                nvfollow = 1 if '9' in nhiemvu else 0
+                
                 if nvlikevip == 1:
                     listlike = getjob(cookie, 'likepostvipcheo')
                     like1 = listlike.text
                     like2 = listlike.json()
                     if like1 == []:
-                        print(f'\033[1;39mHết Nhiệm Vụ Like Vip:((                           ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        print(f'{cam}Hết Nhiệm Vụ Like Vip                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
                         nvlikevip = 0
                     elif 'error' in like2:
-                        print(f'\033[1;39mLấy nhiệm vụ sau 10 giây...                       ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(10)
+                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        countdown(15)
                         nvlikevip = 0
                     else:
-                        print(f'\033[1;39mTìm Thấy \033[1;33m{len(like2)} \033[1;32mNhiệm Vụ Like Vip 🤑💸                  ', end = '\r')
+                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Like Vip                      ', end = '\r')
                         for x in like2:
                             try:
                                 idpost = x['idpost']
                                 link = x['link']
                             except:
                                 countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}, timeout=None).json()
+                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
                             if 'success' in getuid:
                                 uid = getuid['id']
-                                uid_hidden = f"{uid[:1]}XXXXXXXX{uid[-1:]}"
                             else:
-                                print(f'\033[1;36mlink job die!!!', end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 countdown(3)
                             like = _Like(ck, uid, "LIKE", _info[0], _info[1])
                             if like == False:
-                                print(f"\033[1;32mLike Thất Bại : \033[1;33m{uid_hidden}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f"{red}FAIL LIKE: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 _Bypass(ck, _info[1], _info[0])
                                 loilike += 1
                                 countdown(3)
@@ -835,11 +733,10 @@ def Main():
                                     }
                                     get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
                                     xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    xu = "{:,}".format(int(xu))
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                    print(f"\033[1;31m|\033[1;31m{dem:04d}\033[1;31m|\033[1;36mNP-TOOL\033[1;31m|\033[1;32mLIKEVIP\033[1;31m|\033[1;35m+1100xu\033[1;31m|\033[1;35m{uid_hidden}\033[1;31m|\033[1;33m{xu}\033[1;31m|\033[1;34m{user}\033[1;31m|\033[1;36m{time}")
-				    
+                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}LIKEVIP\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+1100\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
+                                    loilike = 0
                                     if dem % doinick == 0:
                                         ptool = 1
                                         break
@@ -847,46 +744,48 @@ def Main():
                                         chongblock(delaybl)
                                     else:
                                         _delay(randint(min, max))
+
                             if loilike >= nhiemvuloi:
                                 _info = _Infofb(ck)
                                 if _info !=False:
-                                    print(f'\033[1;32mCookie Tài Khoản \033[1;33m{tenfb}\033[1;32m Đã Bị Out !!!                ')
+                                    print(f'{red}Cookie Tài Khoản {vang}{tenfb}{red} Đã Bị Out !!!                ')
                                 else:
-                                    print(f'\033[1;32mTài Khoản\033[1;33m {tenfb} \033[1;32mĐã Bị Block Like !!!					')
+                                    print(f'{red}Tài Khoản {vang}{tenfb} {red}Đã Bị Block {vang}Like {red}!!!					')
                                 listck.remove(ck)
                                 ptool = 1
-                                break             
+                                break
+                
                 if ptool == 1:
                     break
+
                 if nvlikethuong == 1:
                     listlike = getjob(cookie, 'likepostcheo')
                     like1 = listlike.text
                     like2 = listlike.json()
                     if like1 == []:
-                        print(f'\033[1;32mHết Nhiệm Vụ Like Thường                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        print(f'{red}Hết Nhiệm Vụ Like Thường                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
                         nvlikethuong = 0
                     elif 'error' in like2:
-                        print(f'\033[1;32mLấy nhiệm vụ sau 10 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(10)
+                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        countdown(15)
                         nvlikethuong = 0
                     else:
-                        print(f'\033[1;36mTìm Thấy \033[1;33m{len(like2)} \033[1;32mNhiệm Vụ Like Xu Thường  🤑💸🔫                    ', end = '\r')
+                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Like Xu Thường                      ', end = '\r')
                         for x in like2:
                             try:
                                 idpost = x['idpost']
                                 link = x['link']
                             except:
                                 countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}, timeout=None).json()
+                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
                             if 'success' in getuid:
                                 uid = getuid['id']
-                                uid_hidden = f"{uid[:2]}XXXXXXX{uid[-2:]}"
                             else:
-                                print(f'\033[1;32mlink bài viết die', end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 countdown(3)
                             like = _Like(ck, uid, "LIKE", _info[0], _info[1])
                             if like == False:
-                                print(f"\033[1;32mFAIL LIKE: {uid_hidden}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f"{cam}FAIL LIKE: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 _Bypass(ck, _info[1], _info[0])
                                 loilike += 1
                                 countdown(3)
@@ -913,8 +812,8 @@ def Main():
                                     xu = get.split('"soduchinh">')[1].split('<')[0]
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'\033[1;31m|{dem}\033[1;31m|\033[1;36mPhuocDEV\033[1;31m|\033[1;32mLIKETHUONG\033[1;31m|\033[1;35m+600xu\033[1;31m|\033[1;35m{uid_hidden}\033[1;31m|\033[1;33m{xu}\033[1;31m|\033[1;34m{user}\033[1;31m|\033[1;36m{h}:{m}:{s}')
-				    
+                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}LIKETHUONG\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+300\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')                       
+                                    loilike = 0
                                     if dem % doinick == 0:
                                         ptool = 1
                                         break
@@ -922,30 +821,33 @@ def Main():
                                         chongblock(delaybl)
                                     else:
                                         _delay(randint(min, max))
+
                             if loilike >= nhiemvuloi:
                                 _info = _Infofb(ck)
                                 if _info !=False:
-                                    print(f'\033[1;32mCookie Tài Khoản \033[1;33m{tenfb} \033[1;32mĐã Bị Out !!!                ')
+                                    print(f'{red}Cookie Tài Khoản {vang}{tenfb}{red} Đã Bị Out !!!                ')
                                 else:
-                                    print(f'\033[1;32mTài Khoản \033[1;33m{tenfb} \033[1;32mĐã Bị Block Like !!!					')
+                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block Like {red}!!!					')
                                 listck.remove(ck)
                                 ptool = 1
                                 break
+
                 if ptool == 1:
-                    break                
+                    break
+                
                 if nvreacvip == 1:
                     listcx = getjob(cookie, 'camxucvipcheo')
                     like1 = listcx.text
                     like2 = listcx.json()
                     if like1 == []:
-                        print(f'\033[1;35mHết Nhiệm Vụ Cảm Xúc Vip                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        print(f'{cam}Hết Nhiệm Vụ Cảm Xúc Vip                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
                         nvreacvip = 0
                     elif 'error' in like2:
-                        print(f'\033[1;35mLấy nhiệm vụ sau 10 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(10)
+                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        countdown(15)
                         nvreacvip = 0
                     else:
-                        print(f'\033[1;36mTìm Thấy \033[1;35m{len(like2)} \033[1;32mNhiệm Vụ Cảm Xúc Vip 🤑💸🔫                      ', end = '\r')
+                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Cảm Xúc Vip                       ', end = '\r')
                         for x in like2:
                             try:
                                 idpost = x['idpost']
@@ -953,16 +855,15 @@ def Main():
                                 typee = x['loaicx']
                             except:
                                 countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}, timeout=None).json()
+                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
                             if 'success' in getuid:
                                 uid = getuid['id']
-                                uid_hidden = f"{uid[:2]}XXXXXXX{uid[-2:]}"
                             else:
-                                print(f'\033[1;32mlink job ngủm rồi:((', end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 countdown(3)
                             like = _Like(ck, uid, typee, _info[0], _info[1])
                             if like == False:
-                                print(f"FAIL {typee}: {uid_hidden}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f"{cam}FAIL {lam}{typee}{trang}: {vang}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 _Bypass(ck, _info[1], _info[0])
                                 loicamxuc += 1
                                 countdown(3)
@@ -987,10 +888,9 @@ def Main():
                                     }
                                     get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
                                     xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    xu = "{:,}".format(int(xu))
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'[{dem:04d}][{time}][{uid_hidden}][+1100][{xu}][{typee}VIP]')
+                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}{typee}VIP\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+1100\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
                                     loicamxuc = 0
                                     if dem % doinick == 0:
                                         ptool = 1
@@ -999,30 +899,33 @@ def Main():
                                         chongblock(delaybl)
                                     else:
                                         _delay(randint(min, max))
+
                             if loicamxuc >= nhiemvuloi:
                                 _info = _Infofb(ck)
                                 if _info !=False:
-                                    print(f'\033[1;32mCookie Tài Khoản\033[1;33m {tenfb} \033[1;32mĐã Bị Ngủm !!!                ')
+                                    print(f'{red}Cookie Tài Khoản {lam}{tenfb}{red} Đã Bị Out !!!                ')
                                 else:
-                                    print(f'\033[1;32mTài Khoản {tenfb} Bị Block Cảm Xúc !!!					')
+                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block Cảm Xúc {red}!!!					')
                                 listck.remove(ck)
                                 ptool = 1
                                 break
+
                 if ptool == 1:
                     break
+
                 if nvreac == 1:
                     listcx = getjob(cookie, 'camxuccheo')
                     like1 = listcx.text
                     like2 = listcx.json()
                     if like1 == []:
-                        print(f'\033[1;32mHết Nhiệm Vụ Cảm Xúc                           ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        print(f'{cam}Hết Nhiệm Vụ Cảm Xúc                           ', end = '\r');sleep(2); print('                                                        ', end = '\r')
                         nvreac = 0
                     elif 'error' in like2:
-                        print(f'\033[1;32mLấy nhiệm vụ sau 10 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(10)
+                        print(f'{cam}Lấy nhiệm vụ sau 5 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        countdown(15)
                         nvreac = 0
                     else:
-                        print(f'\033[1;36mTìm Thấy \033[1;33m{len(like2)} \033[1;32mNhiệm Vụ Cảm Xúc 🤑💸🔫                     ', end = '\r')
+                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Cảm Xúc                      ', end = '\r')
                         for x in like2:
                             try:
                                 idpost = x['idpost']
@@ -1030,16 +933,15 @@ def Main():
                                 typee = x['loaicx']
                             except:
                                 countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}, timeout=None).json()
+                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
                             if 'success' in getuid:
                                 uid = getuid['id']
-                                uid_hidden = f"{uid[:2]}XXXXXXX{uid[-2:]}"
                             else:
-                                print(f'\033[1;32mlink bài viết die', end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 countdown(3)
                             like = _Like(ck, uid, typee, _info[0], _info[1])
                             if like == False:
-                                print(f"FAIL {typee}: {uid_hidden}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f"{red}FAIL {lam}{typee}{trang}: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 _Bypass(ck, _info[1], _info[0])
                                 loicamxuc += 1
                                 countdown(3)
@@ -1064,10 +966,9 @@ def Main():
                                     }
                                     get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
                                     xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    xu = "{:,}".format(int(xu))
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'[{dem:04d}][{time}][{uid_hidden}][+700][{xu}][{typee}]')
+                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}{typee}\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+700\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
                                     loicamxuc = 0
                                     if dem % doinick == 0:
                                         ptool = 1
@@ -1076,30 +977,33 @@ def Main():
                                         chongblock(delaybl)
                                     else:
                                         _delay(randint(min, max))
+
                             if loicamxuc >= nhiemvuloi:
                                 _info = _Infofb(ck)
                                 if _info !=False:
-                                    print(f'\033[1;32mCookie Tài Khoản \033[1;33m{tenfb} \033[1;32mĐã Bị Out !!!                ')
+                                    print(f'{red}Cookie Tài Khoản {lam}{tenfb}{red} Đã Bị Out !!!                ')
                                 else:
-                                    print(f'\033[1;32mTài Khoản \033[1;33m{tenfb} \033[1;32mĐã Bị Block Cảm Xúc !!!					')
+                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block {lam}Cảm Xúc {red}!!!					')
                                 listck.remove(ck)
                                 ptool = 1
                                 break
+
                 if ptool == 1:
                     break
+
                 if nvreaccmt == 1:
                     listcxcmt = getjob(cookie, 'camxuccheobinhluan')
                     like1 = listcxcmt.text
                     like2 = listcxcmt.json()
                     if like1 == []:
-                        print(f'\033[1;32mHết Nhiệm Vụ Cảm Xúc Cmt             ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        print(f'{cam}Hết Nhiệm Vụ Cảm Xúc Cmt             ', end = '\r');sleep(2); print('                                                        ', end = '\r')
                         nvreaccmt = 0
                     elif 'error' in like2:
-                        print(f'\033[1;32mLấy nhiệm vụ sau 10 giây...                          ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(10)
+                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        countdown(15)
                         nvreaccmt = 0
                     else:
-                        print(f'\033[1;36mTìm Thấy \033[1;33m{len(like2)} \033[1;32mNhiệm Vụ Cảm Xúc Cmt 🤑💸🔫                    ', end = '\r')
+                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Cảm Xúc Cmt                     ', end = '\r')
                         for x in like2:
                             try:
                                 idpost = x['idpost']
@@ -1107,16 +1011,15 @@ def Main():
                                 typee = x['loaicx']
                             except:
                                 countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}, timeout=None).json()
+                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
                             if 'success' in getuid:
                                 uid = getuid['id']
-                                uid_hidden = f"{uid[:2]}XXXXXXX{uid[-2:]}"
                             else:
-                                print(f'link bài viết die', end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 countdown(3)
                             like = _React_Cmt(ck, _info[1], _info[0], uid, typee)
                             if like == False:
-                                print(f"FAIL {typee} CMT: {uid_hidden}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f"{cam}FAIL {lam}{typee} CMT{trang}: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 _Bypass(ck, _info[1], _info[0])
                                 loicxcmt += 1
                                 countdown(3)
@@ -1141,10 +1044,9 @@ def Main():
                                     }
                                     get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
                                     xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    xu = "{:,}".format(int(xu))
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'[{dem:04d}][{time}][{uid_hidden}][+700][{xu}][{typee}CMT]')
+                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}{typee}CMT\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+700\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
                                     loicxcmt = 0
                                     if dem % doinick == 0:
                                         ptool = 1
@@ -1153,46 +1055,48 @@ def Main():
                                         chongblock(delaybl)
                                     else:
                                         _delay(randint(min, max))
+
                             if loicxcmt >= nhiemvuloi:
                                 _info = _Infofb(ck)
                                 if _info !=False:
-                                    print(f'Cookie Tài Khoản {tenfb} Đã Bị Out !!!                ')
+                                    print(f'{red}Cookie Tài Khoản {lam}{tenfb}{red} Đã Bị Out !!!                ')
                                 else:
-                                    print(f'Tài Khoản {tenfb} Đã Bị Block Cảm Xúc !!!					')
+                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block {vang}Cảm Xúc {red}!!!					')
                                 listck.remove(ck)
                                 ptool = 1
                                 break
+
                 if ptool == 1:
                     break
+
                 if nvfollow == 1:
                     listfl = getjob(cookie, 'subcheo')
                     like1 = listfl.text
                     like2 = listfl.json()
                     if like1 == []:
-                        print(f'Hết Nhiệm Vụ Follow              ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        print(f'{cam}Hết Nhiệm Vụ Follow              ', end = '\r');sleep(2); print('                                                        ', end = '\r')
                         nvfollow = 0
                     elif 'error' in like2:
-                        print(f'Lấy nhiệm vụ sau 10 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(10)
+                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        countdown(17)
                         nvfollow = 0
                     else:
-                        print(f'\033[1;36mTìm Thấy {len(like2)} Nhiệm Vụ Follow 🤑💸🔫                    ', end = '\r')
+                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Follow                      ', end = '\r')
                         for x in like2:
                             try:
                                 idpost = x['idpost']
                                 link = x['link']
                             except:
                                 countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}, timeout=None).json()
+                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
                             if 'success' in getuid:
                                 uid = getuid['id']
-                                uid_hidden = f"{uid[:2]}XXXXXXX{uid[-2:]}"
                             else:
-                                print(f'link bài viết die', end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 countdown(3)
                             like = _Follow(ck, _info[1], _info[0], uid)
                             if like == False:
-                                print(f"FAIL FOLLOW: {uid_hidden}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f"{cam}FAIL FOLLOW{trang}: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 _Bypass(ck, _info[1], _info[0])
                                 loifl += 1
                                 countdown(3)
@@ -1217,10 +1121,9 @@ def Main():
                                     }
                                     get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
                                     xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    xu = "{:,}".format(int(xu))
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'[{dem:04d}][{time}][{uid_hidden}][+700][{xu}][FOLLOW]')
+                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] [\033[1;35m{cam}FOLLOW\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+700\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
                                     loifl = 0
                                     if dem % doinick == 0:
                                         ptool = 1
@@ -1229,30 +1132,33 @@ def Main():
                                         chongblock(delaybl)
                                     else:
                                         _delay(randint(min, max))
+
                             if loifl >= nhiemvuloi:
                                 _info = _Infofb(ck)
                                 if _info !=False:
-                                    print(f'Cookie Tài Khoản {tenfb} Đã Bị Out !!!                ')
+                                    print(f'{red}Cookie Tài Khoản {lam}{tenfb}{red} Đã Bị Out !!!                ')
                                 else:
-                                    print(f'Tài Khoản {tenfb} Đã Bị Block Follow !!!					')
+                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block {lam}Follow {red}!!!					')
                                 listck.remove(ck)
                                 ptool = 1
                                 break
+
                 if ptool == 1:
                     break
+
                 if nvcmt == 1:
                     cmtcheo = getjob(cookie, 'cmtcheo')
                     like1 = cmtcheo.text
                     like2 = cmtcheo.json()
                     if like1 == []:
-                        print(f'Hết Nhiệm Vụ Cmt              ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        print(f'{cam}Hết Nhiệm Vụ Cmt              ', end = '\r');sleep(2); print('                                                        ', end = '\r')
                         nvcmt = 0
                     elif 'error' in like2:
-                        print(f'Lấy nhiệm vụ sau 10 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(10)
+                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        countdown(15)
                         nvcmt = 0
                     else:
-                        print(f'\033[1;36mTìm Thấy {len(like2)} Nhiệm Vụ Cmt 🤑💸🔫                    ', end = '\r')
+                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Cmt                      ', end = '\r')
                         for x in like2:
                             try:
                                 idpost = x['idpost']
@@ -1260,16 +1166,15 @@ def Main():
                                 ndcmt = json.loads(x["nd"])[0]
                             except:
                                 countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}, timeout=None).json()
+                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
                             if 'success' in getuid:
                                 uid = getuid['id']
-                                uid_hidden = f"{uid[:2]}XXXXXXX{uid[-2:]}"
                             else:
-                                print(f'link bài viết die', end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 countdown(3)
-                            like = _CMT  (ck, uid, _info[1], _info[0],ndcmt)
+                            like = CMT(ck, uid, _info[1], _info[0], ndcmt)
                             if like == False:
-                                print(f"FAIL CMT: {uid_hidden}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f"{red}FAIL CMT{trang}: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 _Bypass(ck, _info[1], _info[0])
                                 loicmt += 1
                                 countdown(3)
@@ -1294,10 +1199,9 @@ def Main():
                                     }
                                     get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
                                     xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    xu = "{:,}".format(int(xu))
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'[{dem:04d}][{time}][{uid_hidden}][+1400][{xu}][CMTCHEO]')
+                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}CMTCHEO\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+1400\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
                                     loicmt = 0
                                     if dem % doinick == 0:
                                         ptool = 1
@@ -1306,46 +1210,48 @@ def Main():
                                         chongblock(delaybl)
                                     else:
                                         _delay(randint(min, max))
+
                             if loicmt >= nhiemvuloi:
                                 _info = _Infofb(ck)
                                 if _info !=False:
-                                    print(f'Cookie Tài Khoản {tenfb} Đã Bị Out !!!                ')
+                                    print(f'{red}Cookie Tài Khoản {lam}{tenfb}{red} Đã Bị Out !!!                ')
                                 else:
-                                    print(f'Tài Khoản {tenfb} Đã Bị Block Cmt !!!					')
+                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block {lam}Cmt {red}!!!					')
                                 listck.remove(ck)
                                 ptool = 1
-                                break              
+                                break
+                
                 if ptool == 1:
-                    break                
+                    break
+                
                 if nvshare == 1:
                     listshare = getjob(cookie, 'sharecheo')
                     like1 = listshare.text
                     like2 = listshare.json()
                     if like1 == []:
-                        print(f'Hết Nhiệm Vụ Share              ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        print(f'{cam}Hết Nhiệm Vụ Share              ', end = '\r');sleep(2); print('                                                        ', end = '\r')
                         nvshare = 0
                     elif 'error' in like2:
-                        print(f'Lấy nhiệm vụ sau 10 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(10)
+                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        countdown(15)
                         nvshare = 0
                     else:
-                        print(f'\033[1;36mTìm Thấy {len(like2)} Nhiệm Vụ Share 🤑💸🔫                    ', end = '\r')
+                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Share                      ', end = '\r')
                         for x in like2:
                             try:
                                 idpost = x['idpost']
                                 link = x['link']
                             except:
                                 countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}, timeout=None).json()
+                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
                             if 'success' in getuid:
                                 uid = getuid['id']
-                                uid_hidden = f"{uid[:2]}XXXXXXX{uid[-2:]}"
                             else:
-                                print(f'link bài viết die', end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 countdown(3)
                             share = _Share(ck, _info[1], _info[0], uid)
                             if share == False:
-                                print(f"FAIL SHARE: {uid_hidden}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f"{red}FAIL SHARE{trang}: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 _Bypass(ck, _info[1], _info[0])
                                 loishare += 1
                                 countdown(3)
@@ -1370,11 +1276,9 @@ def Main():
                                     }
                                     get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
                                     xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    xu = "{:,}".format(int(xu))
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                      # Ẩn UID, chỉ hiển thị 2 số đầu và 2 số cuối
-                                    print(f'[{dem:04d}][{time}][{uid_hidden}][+600][{xu}][SHARE]')
+                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}SHARE\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+600\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
                                     loishare = 0
                                     if dem % doinick == 0:
                                         ptool = 1
@@ -1383,46 +1287,48 @@ def Main():
                                         chongblock(delaybl)
                                     else:
                                         _delay(randint(min, max))
+
                             if loishare >= nhiemvuloi:
                                 _info = _Infofb(ck)
                                 if _info !=False:
-                                    print(f'Cookie Tài Khoản {tenfb} Đã Bị Out !!!                ')
+                                    print(f'{red}Cookie Tài Khoản {lam}{tenfb}{red} Đã Bị Out !!!                ')
                                 else:
-                                    print(f'Tài Khoản {tenfb} Đã Bị Block Share !!!					')
+                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block {lam}Share {red}!!!					')
                                 listck.remove(ck)
                                 ptool = 1
-                                break               
+                                break
+                
                 if ptool == 1:
-                    break               
+                    break
+                
                 if nvlikepage == 1:
                     listlikepage = getjob(cookie, 'likepagecheo')
                     like1 = listlikepage.text
                     like2 = listlikepage.json()
                     if like1 == []:
-                        print(f'Hết Nhiệm Vụ Like Page             ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        print(f'{cam}Hết Nhiệm Vụ Like Page             ', end = '\r');sleep(2); print('                                                        ', end = '\r')
                         nvlikepage = 0
                     elif 'error' in like2:
-                        print(f'Lấy nhiệm vụ sau 10 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(10)
+                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        countdown(15)
                         nvlikepage = 0
                     else:
-                        print(f'\033[1;36mTìm Thấy {len(like2)} Nhiệm Vụ Like Page 🤑💸🔫               ', end = '\r')
+                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Like Page                     ', end = '\r')
                         for x in like2:
                             try:
                                 idpost = x['idpost']
                                 link = x['link']
                             except:
                                 countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}, timeout=None).json()
+                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
                             if 'success' in getuid:
                                 uid = getuid['id']
-                                uid_hidden = f"{uid[:2]}XXXXXXX{uid[-2:]}"
                             else:
-                                print(f'link bài viết die', end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 countdown(3)
                             likepage = _Page(ck, _info[1], _info[0], uid)
                             if likepage == False:
-                                print(f"FAIL LIKEPAGE: {uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f"{red}FAIL LIKEPAGE{trang}: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 _Bypass(ck, _info[1], _info[0])
                                 loilikepage += 1
                                 countdown(3)
@@ -1447,10 +1353,9 @@ def Main():
                                     }
                                     get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
                                     xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    xu = "{:,}".format(int(xu))
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'[{dem:04d}][{time}][{uid_hidden}][+1300][{xu}][LIKEPAGE]')
+                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}LIKEPAGE\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+1300\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
                                     loilikepage = 0
                                     if dem % doinick == 0:
                                         ptool = 1
@@ -1459,19 +1364,23 @@ def Main():
                                         chongblock(delaybl)
                                     else:
                                         _delay(randint(min, max))
+
                             if loilikepage >= nhiemvuloi:
                                 _info = _Infofb(ck)
                                 if _info !=False:
-                                    print(f'Cookie Tài Khoản {tenfb} Đã Chim Cút!!!                ')
+                                    print(f'{red}Cookie Tài Khoản {lam}{tenfb}{red} Đã Bị Out !!!                ')
                                 else:
-                                    print(f'Tài Khoản {tenfb} Đã Bị Block LikePage !!!					')
+                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block {lam}Like Page{red}!!!					')
                                 listck.remove(ck)
                                 ptool = 1
                                 break
+
                 if ptool == 1:
                     break
+
                 if loilike + loicamxuc + loicxcmt + loifl + loicmt + loishare + loilikepage == 0:
                     for i in range(10, 0, -1):
-                        Write.Print(f'Cạn Job Mẹ Rồi,Vui Lòng Chờ {i} Giây...',Colors.white,interval=0.0001, end = '\r');sleep(1); print('                                                        ', end = '\r')
+                        Write.Print(f' Tất Cả Các Nhiệm Vụ Đã Hết, Vui Lòng Chờ {i} Giây ',Colors.rainbow,interval=0.0001, end = '\r');sleep(1); print('                                                        ', end = '\r')
+
 if __name__ == '__main__':
     Main()
