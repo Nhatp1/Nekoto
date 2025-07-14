@@ -1,24 +1,58 @@
+
 import requests, base64, uuid, os, json
 from random import randint
 from pystyle import Write, Colors
 from datetime import datetime
 from time import sleep
 from colorama import Fore, init
+from rich.console import Console
+from rich.panel import Panel
+from rich.console import Console
+from rich.text import Text
 from pystyle import Write, Colors, Colorate
+import threading
+def play_music():
+    os.system("mpv on_top.mp3 --no-video ")
+
+def tai_nhac():
+    url = "https://github.com/Cacdume-wq/cac/blob/main/on_top.mp3"  # Link mp3
+    if not os.path.exists("on_top.mp3"):
+        print("🔊 Đang tải nhạc nền...")
+        try:
+            r = requests.get(url)
+            with open("nhac.mp3", "wb") as f:
+                f.write(r.content)
+            print("✅ Đã tải xong nhạc.")
+        except:
+            print("❌ Không thể tải nhạc.")
+
+tai_nhac()
+bat_nhac = input("🎵 Bạn có muốn bật nhạc nền không? (y/n): ").strip().lower()
+if bat_nhac == "y":
+    threading.Thread(target=play_music, daemon=True).start()
+
+
+
 
 os.system('cls' if os.name=='nt' else 'clear')
-red = "\033[1;31m"
-luc = "\033[1;32m"
-vang = "\033[1;33m"
-cam = "\033[38;5;208m"
-tim = "\033[1;35m"
-lam = "\033[1;36m"
-trang = "\033[1;37m"
+red    = "\033[38;5;196m"  # Đỏ chói
+luc    = "\033[1;32m"   # Xanh lá neon
+vang   = "\033[38;5;226m"  # Vàng tươi
+cam    = "\033[38;5;208m"  # Cam sáng
+tim    = "\033[38;5;201m"  # Tím sáng
+lam    = "\033[38;5;51m"   # Xanh dương neon
+trang  = "\033[38;5;15m"   # Trắng sáng
 listck = []
 listjob = []
+thanh = f'{red}[{trang}</>{red}] {trang}=>'
+do = "\033[1;31m"
+xanh = "\033[1;36m"
+
+from datetime import datetime
+from colorama import Fore
 
 def banner():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system("cls" if os.name == "nt" else "clear")
     print(Colorate.Diagonal(Colors.green_to_red, """
     
 ███╗   ██╗██████╗    ████████╗ ██████╗  ██████╗ ██╗     
@@ -28,15 +62,16 @@ def banner():
 ██║ ╚████║██║           ██║   ╚██████╔╝╚██████╔╝███████╗
 ╚═╝  ╚═══╝╚═╝           ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝
 ╠═══════════════════════════════════════════════╣
-║▶ Nhóm   : https://zalo.me/g/vmugmo123              ║
-║▶ Zalo : 0394764859                        ║
+║▶ Nhóm   : \033[38;5;20mhttps://zalo.me/g/vmugmo123              ║
+║▶ Zalo : \033[38;5;1204m0394764859                        ║
 ║▶ Tool Do Tao Code 😆                     ║
 ║▶ May Anh Dung Bug Tool Em 😭              ║
 ║▶ Phiên Bản Tool : 1.0 ( VIP )                 ║
 ╚═══════════════════════════════════════════════╝                                                        
 
 """))
-
+init(autoreset=True)
+console = Console()
     
 def getjob(cookie, nv):
     headers = {
@@ -63,34 +98,33 @@ def _encode_to_base64(_data):
 def _delay(value):
 	while not(value <= 1):
 		value -= 0.123
-		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}DELAY\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
-		sleep(0.02)
-		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}DELAY\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
-		sleep(0.02)
-		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}DELAY\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
-		sleep(0.02)
-		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}DELAY\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
-		sleep(0.02)
-		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}DELAY\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
-		sleep(0.02)
-
+		print(f'''\033[1;39m[\033[1;36mNP-TOOL\033[1;39m][ \033[1;36mDELAY \033[1;39m][\033[1;36m{str(value)[0:5]}\033[1;39m][\033[1;33mX  \033[1;39m ]''', '               ', end = '\r')
+		sleep(0.025)
+		print(f'''\033[1;39m[\033[1;36mNP-TOOL\033[1;39m][ \033[1;36mDELAY \033[1;39m][\033[1;36m{str(value)[0:5]}\033[1;39m][\033[1;33m X   \033[1;39m]''', '               ', end = '\r')
+		sleep(0.025)
+		print(f'''\033[1;39m[\033[1;36mNP-TOOL\033[1;39m][ \033[1;36mDELAY \033[1;39m][\033[1;36m{str(value)[0:5]}[ \033[1;33m  X  \033[1;39m]''', '               ', end = '\r')
+		sleep(0.025)
+		print(f'''\033[1;39m[\033[1;36mNP-TOOL\033[1;39m][ \033[1;36mDELAY \033[1;39m][\033[1;36m{str(value)[0:5]}\033[1;39m][\033[1;33m   X \033[1;39m]''', '               ', end = '\r')
+		sleep(0.025)
+		print(f'''\033[1;39m[\033[1;36mNP-TOOL\033[1;39m][ \033[1;36mDELAY \033[1;39m][\033[1;36m{str(value)[0:5]}\033[1;39m][\033[1;33m    X\033[1;39m]''', '               ', end = '\r')
+		sleep(0.025)
 def countdown(value):
 	while not(value <= 1) :
 		value -= 0.123
-		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}COUNTDOWN\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
-		sleep(0.02)
-		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}COUNTDOWN\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
-		sleep(0.02)
-		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}COUNTDOWN\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
-		sleep(0.02)
-		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}COUNTDOWN\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
-		sleep(0.02)
-		print(f'''\033[1;35m\033[1;35m[{lam}NP\033[1;35m]\033[1;35m[{luc}TOOL-LO\033[1;35m]\033[1;35m[{vang}COUNTDOWN\033[1;35m]\033[1;35m[{lam}{str(value)[0:5]}\033[1;35m]''', '               ', end = '\r')
-		sleep(0.02)
+		print(f'''\033[1;39m[\033[1;36mNP-TOOL\033[1;39m][ \033[1;36mDELAY \033[1;39m][\033[1;36m{str(value)[0:5]}\033[1;39m][\033[1;33mX  \033[1;39m ]''', '               ', end = '\r')
+		sleep(0.025)
+		print(f'''\033[1;39m[\033[1;36mNP-TOOL\033[1;39m][ \033[1;36mDELAY \033[1;39m][\033[1;36m{str(value)[0:5]}\033[1;39m][\033[1;33m X   \033[1;39m]''', '               ', end = '\r')
+		sleep(0.025)
+		print(f'''\033[1;39m[\033[1;36mNP-TOOL\033[1;39m][ \033[1;36mDELAY \033[1;39m][\033[1;36m{str(value)[0:5]}[ \033[1;33m  X  \033[1;39m]''', '               ', end = '\r')
+		sleep(0.025)
+		print(f'''\033[1;39m[\033[1;36mNP-TOOL\033[1;39m][ \033[1;36mDELAY \033[1;39m][\033[1;36m{str(value)[0:5]}\033[1;39m][\033[1;33m   X \033[1;39m]''', '               ', end = '\r')
+		sleep(0.025)
+		print(f'''\033[1;39m[\033[1;36mNP-TOOL\033[1;39m][ \033[1;36mDELAY \033[1;39m][\033[1;36m{str(value)[0:5]}\033[1;39m][\033[1;33m    X\033[1;39m]''', '               ', end = '\r')
+		sleep(0.025)
 
 def chongblock(delaybl):
 	for i in range(delaybl, -1, -1):
-		Write.Print(f'Đang chống block chạy lại sau {i} giây  \r',Colors.rainbow,interval=0.0001);sleep(1); print('                                                        ', end = '\r')
+		Write.Print(f'Đang ở chế độ chống block , sẽ chạy lại sau {i} giây  \r',Colors.rainbow,interval=0.0001);sleep(1); print('                                                        ', end = '\r')
 
 def _Infofb(cookie):
     heads={
@@ -538,17 +572,15 @@ def Nhap_Cookie():
     listck = []
     while True:
         demck += 1
-        ck = input(f'\033[38;5;208mNhập Cookie Facebook Thứ {vang}{demck}: {lam} ')
+        ck = input(f'{thanh}{luc} Nhập Cookie Facebook Thứ {vang}{demck}: {vang} ')
         if ck == '' and demck > 1:
             break
         _info = _Infofb(ck)
         if _info == False:
-            print(f'{Fore.RED}208mCookie Facebook Die, Vui Lòng Nhập Lại!!!')
+            print(f'{Fore.RED}Cookie Facebook Die, Vui Lòng Nhập Lại!!!')
             demck-=1
         else:
-            print(f"{red}════════════════════════════════════════════════════")
-            print(f'{cam}UID FACEBOOK: {vang}{_info[1]} {red}| {cam}NAME FACEBOOK: {vang}{_info[2]}')
-            print(f"{red}════════════════════════════════════════════════════")
+            print(f'{luc}NAME FACEBOOK: {vang}{_info[2]}')
             listck.append(ck)
     return listck
 
@@ -564,8 +596,8 @@ def Main():
             if login.json()['status'] == 'success':
                 cookie = 'PHPSESSID='+(login.cookies)['PHPSESSID']
                 user = login.json()['data']['user']
-                print(f'{vang}[{trang}1{vang}] {cam} {cam}vào tài khoản {lam}{user}')
-                print(f'{vang}[{trang}2{vang}] {cam} {cam}Nhập Access_Token TTC mới')
+                print(f'{thanh} {luc}Nhập {do}[{vang}1{do}]{luc} Để Log Acc {vang}{user}')
+                print(f'{thanh} {luc}Nhập {do}[{vang}2{do}]{luc} Để Thay Access_Token TTC Mới ')
                 chon = Write.Input(f'Lựa Chọn Của Bạn: ',Colors.green_to_yellow,interval=0.0001)
                 if chon == '2':
                     os.remove('configttc.txt')
@@ -577,7 +609,7 @@ def Main():
             else:
                 os.remove('configttc.txt')
         if not os.path.exists('configttc.txt'):
-            tk = input(f'{cam}Nhập Access_token TTC{trang}: ')
+            tk = input(f'{luc}Nhập Access_token TTC{vang}: ')
             with open('configttc.txt', 'w') as f:
                 f.write(tk)
         with open('configttc.txt', 'r') as f:
@@ -587,20 +619,19 @@ def Main():
             cookie = 'PHPSESSID='+(login.cookies)['PHPSESSID']
             user = login.json()['data']['user']
             sodu = login.json()['data']['sodu']
-            print(f"{red}════════════════════════════════════════════════════")
-            print(f"{cam}Tài Khoản: {lam}{user} {cam}| {cam}Xu Hiện Tại: {lam}{sodu}")
-            print(f"{red}════════════════════════════════════════════════════")
+            print(f"{luc}Tài Khoản: {vang}{user} {luc}| {luc}Xu Hiện Tại: {vang}{sodu}")
             break
         else:
             os.remove ('configttc.txt')
             continue
     while True:
         if os.path.exists('Cookie_FB.txt'):
-            print(f'{vang}[{trang}1{vang}] {cam}Sử Dụng Cookie Facebook Đã Lưu')
-            print(f'{vang}[{trang}2{vang}] {cam}Nhập Cookie Facebook Mới')
-            chon = Write.Input(f'Lựa Chọn Của Bạn: ',Colors.green_to_yellow,interval=0.0001)
+            os.system("cls" if os.name == "nt" else "clear")
+            print(f'{thanh} {luc}Nhập {do}[{vang}1{do}]{luc} Sử Dụng Cookie Facebook Đã Lưu')
+            print(f'{thanh} {luc}Nhập {do}[{vang}2{do}]{luc} Nhập Cookie Facebook Mới')
+            chon = input(f"{thanh}{luc} Nhập Lựa Chọn : {vang}")
             if chon == '1':
-                print('\033[38;5;208mĐang Lấy Dữ Liệu Đã Lưu')
+                print('\033[1;32mĐang Lấy Dữ Liệu Đã Lưu')
                 sleep(1)
                 with open('Cookie_FB.txt', 'r') as f:
                     listck = json.loads(f.read())
@@ -617,18 +648,23 @@ def Main():
                 json.dump(listck, f)
                 break
     banner()
-    print(f"{red}════════════════════════════════════════════════════")
-    print(f"{cam}Tên Tài Khoản: {lam}{user} {cam}| {cam}Xu Hiện Tại: {lam}{sodu}")
-    print(f"{red}════════════════════════════════════════════════════")
-    Write.Print('''[1] - LIKEVIP\n[2] - LIKETHUONG\n[3] - REACTIONVIP\n[4] - REACTION\n[5] - REACTIONCMT\n[6] - CMTCHEO\n[7] - SHARE\n[8] - LIKEPAGE\n[9] - FOLLOW\n🌟 Lưu Ý: Có Thể Chọn Nhiều Nhiệm Vụ (VD: 123...)\n''',Colors.rainbow,interval=0.0001)
-    print(f"{red}════════════════════════════════════════════════════")
-    nhiemvu = input (f'\033[38;5;208mNhập Nhiệm Vụ Cần Chạy: {lam}')
-    min = int(input(f'\033[38;5;208mNhập Delay Min: {lam}'))
-    max = int(input(f'\033[38;5;208mNhập Delay Max: {lam}'))
-    nvblock = int(input(f'\033[38;5;208mSau Bao Nhiêu Nhiệm Vụ Thì Chống Block: {lam}'))
-    delaybl = int(input(f'\033[38;5;208mSau {lam}{nvblock} \033[38;5;208mNhiệm Vụ Thì Nghỉ Ngơi: {lam}'))
-    doinick = int(input(f'\033[38;5;208mSau Bao Nhiêu Nhiệm Vụ Thì Đổi Nick: {lam}'))
-    nhiemvuloi = int(input(f'\033[38;5;208mLỗi Bao Nhiêu Nhiệm Vụ Thì Xóa Cookie: {lam}'))
+    print(f"{trang}════════════════════════════════════════════════════")
+    print(f"{luc}Tên Tài Khoản: {vang}{user} {luc}")
+    print(f"{luc}Xu Hiện Tại: {vang}{sodu}")
+    print(f"{trang}════════════════════════════════════════════════════")
+    print(f"{thanh} {luc}Nhập {do}[{vang}1{do}]{luc} Để Chạy Nhiệm Vụ Like Vip")
+    print(f"{thanh} {luc}Nhập {do}[{vang}2{do}]{luc} Để Chạy Nhiệm Vụ Cảm Xúc Vip")
+    print(f"{thanh} {luc}Nhập {do}[{vang}3{do}]{luc} Để Chạy Nhiệm Vụ Cảm Xúc Cmt")
+    print(f"{trang}════════════════════════════════════════════════════")
+    nhiemvu = input (f'{thanh}{luc} Nhập Nhiệm Vụ Cần Chạy: {vang}')
+    min = 0
+    max = 5
+    nvblock = int(input(f'{thanh}{luc} Sau Bao Nhiêu Nhiệm Vụ Thì Chống Block: {vang}'))
+    delaybl = int(input(f'{thanh}{luc} Sau {lam}{nvblock} Nhiệm Vụ Thì Nghỉ Ngơi: {vang}'))
+    doinick = int(input(f'{thanh}{luc} Sau Bao Nhiêu Nhiệm Vụ Thì Đổi Nick: {vang}'))
+    nhiemvuloi = int(input(f'{thanh}{luc} Lỗi Bao Nhiêu Nhiệm Vụ Thì Xóa Cookie: {vang}'))
+    proxy = input(f"{thanh}{luc} Nhập Proxy (hoặc Enter để bỏ qua): {vang}").strip()
+    proxies = {"http": proxy, "https": proxy} if proxy else None
     while True:
         if len(listck) == 0:
             print(f'{red}Đã Xoá Tất Cả Cookie, Vui Lòng Nhập Lại')
@@ -661,39 +697,29 @@ def Main():
             }
             cauhinh = requests.post('https://tuongtaccheo.com/cauhinh/datnick.php',headers=headers, data=data, timeout=5).text
             if '1' in cauhinh:
-                print(f"{red}════════════════════════════════════════════════════")
-                print(cam+f" Chạy UID FB: {lam}{uidfb} {cam}| {cam}FB: {lam}{tenfb}")
-                print(f"{red}════════════════════════════════════════════════════")
+                print(f'{luc}ID Facebook: {vang}{_info[1].encode("utf-8", "replace").decode()} {vang}| {luc}Tên Facebook: {vang}{_info[2].encode("utf-8", "replace").decode()}')
             else:
-                print(f"{red}════════════════════════════════════════════════════")
-                print(cam+f" Cấu Hình Thất Bại UID FB: {lam}{uidfb} {cam}| {cam}Tên FB: {lam}{tenfb}")
-                print(f"{red}════════════════════════════════════════════════════")
+                print(do+f" Cấu Hình Thất Bại UID FB: {do}{uidfb} {cam}| {cam}Tên FB: {lam}{tenfb}")
                 continue
             ptool = 0
             while True:
                 nvlikevip = 1 if '1' in nhiemvu else 0
-                nvlikethuong = 1 if '2' in nhiemvu else 0
-                nvreacvip = 1 if '3' in nhiemvu else 0
-                nvreac = 1 if '4' in nhiemvu else 0
-                nvreaccmt = 1 if '5' in nhiemvu else 0
-                nvcmt = 1 if '6' in nhiemvu else 0
-                nvshare = 1 if '7' in nhiemvu else 0
-                nvlikepage = 1 if '8' in nhiemvu else 0
-                nvfollow = 1 if '9' in nhiemvu else 0
+                nvreacvip = 1 if '2' in nhiemvu else 0
+                nvreaccmt = 1 if '3' in nhiemvu else 0
                 
                 if nvlikevip == 1:
                     listlike = getjob(cookie, 'likepostvipcheo')
                     like1 = listlike.text
                     like2 = listlike.json()
                     if like1 == []:
-                        print(f'{cam}Hết Nhiệm Vụ Like Vip                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        print(f'{luc}Hết Nhiệm Vụ Like Vip                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
                         nvlikevip = 0
                     elif 'error' in like2:
-                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(15)
+                        print(f'{luc}Delay Get Job 10s                    ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        countdown(10)
                         nvlikevip = 0
                     else:
-                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Like Vip                      ', end = '\r')
+                        print(f'{luc}Tìm Thấy {vang}{len(like2)} {luc}Nhiệm Vụ Like Vip                      ', end = '\r')
                         for x in like2:
                             try:
                                 idpost = x['idpost']
@@ -702,13 +728,13 @@ def Main():
                                 countdown(6)
                             getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
                             if 'success' in getuid:
-                                uid = getuid['id']
+                                uuid = getuid['id']
                             else:
                                 print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 countdown(3)
-                            like = _Like(ck, uid, "LIKE", _info[0], _info[1])
+                            like = _Like(ck, uuid, "LIKE", _info[0], _info[1])
                             if like == False:
-                                print(f"{red}FAIL LIKE: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f"{red}FAIL LIKE: {lam}{uuid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 _Bypass(ck, _info[1], _info[0])
                                 loilike += 1
                                 countdown(3)
@@ -735,7 +761,7 @@ def Main():
                                     xu = get.split('"soduchinh">')[1].split('<')[0]
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}LIKEVIP\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+1100\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
+                                    print(f'{do}| {vang}{dem}{do} | {xanh}{time}{do} | {vang}LIKE{do} | {trang}{uuid}{do} | {vang}+1100{do} | {luc}{str(format(int(xu),","))} {do}| {xanh}{user}')
                                     loilike = 0
                                     if dem % doinick == 0:
                                         ptool = 1
@@ -758,96 +784,20 @@ def Main():
                 if ptool == 1:
                     break
 
-                if nvlikethuong == 1:
-                    listlike = getjob(cookie, 'likepostcheo')
-                    like1 = listlike.text
-                    like2 = listlike.json()
-                    if like1 == []:
-                        print(f'{red}Hết Nhiệm Vụ Like Thường                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        nvlikethuong = 0
-                    elif 'error' in like2:
-                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(15)
-                        nvlikethuong = 0
-                    else:
-                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Like Xu Thường                      ', end = '\r')
-                        for x in like2:
-                            try:
-                                idpost = x['idpost']
-                                link = x['link']
-                            except:
-                                countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
-                            if 'success' in getuid:
-                                uid = getuid['id']
-                            else:
-                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
-                                countdown(3)
-                            like = _Like(ck, uid, "LIKE", _info[0], _info[1])
-                            if like == False:
-                                print(f"{cam}FAIL LIKE: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
-                                _Bypass(ck, _info[1], _info[0])
-                                loilike += 1
-                                countdown(3)
-                            else:
-                                headers = {
-                                    "Host":"tuongtaccheo.com",
-                                    "x-requested-with":"XMLHttpRequest",
-                                    "content-type":"application/x-www-form-urlencoded; charset=UTF-8",
-                                    "origin":"https://tuongtaccheo.com",
-                                    "cookie": cookie
-                                }
-                                data = {
-                                    'id': idpost
-                                }
-                                nhan = requests.post('https://tuongtaccheo.com/kiemtien/likepostcheo/nhantien.php',headers=headers, data=data).json()
-                                if 'mess' in nhan:
-                                    headers = {
-                                        "Host": "tuongtaccheo.com",
-                                        "x-requested-with": "XMLHttpRequest",
-                                        "user-agent": "Mozilla/5.0 (Linux; Android 10; Mi 9T Pro) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/12.1 Chrome/79.0.3945.136 Mobile Safari/537.36",
-                                        "cookie": cookie
-                                    }
-                                    get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
-                                    xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    dem+=1
-                                    time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}LIKETHUONG\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+300\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')                       
-                                    loilike = 0
-                                    if dem % doinick == 0:
-                                        ptool = 1
-                                        break
-                                    if dem % nvblock == 0:
-                                        chongblock(delaybl)
-                                    else:
-                                        _delay(randint(min, max))
-
-                            if loilike >= nhiemvuloi:
-                                _info = _Infofb(ck)
-                                if _info !=False:
-                                    print(f'{red}Cookie Tài Khoản {vang}{tenfb}{red} Đã Bị Out !!!                ')
-                                else:
-                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block Like {red}!!!					')
-                                listck.remove(ck)
-                                ptool = 1
-                                break
-
-                if ptool == 1:
-                    break
                 
                 if nvreacvip == 1:
                     listcx = getjob(cookie, 'camxucvipcheo')
                     like1 = listcx.text
                     like2 = listcx.json()
                     if like1 == []:
-                        print(f'{cam}Hết Nhiệm Vụ Cảm Xúc Vip                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        print(f'{luc}Hết Nhiệm Vụ Cảm Xúc Vip                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
                         nvreacvip = 0
                     elif 'error' in like2:
-                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
+                        print(f'{luc}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
                         countdown(15)
                         nvreacvip = 0
                     else:
-                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Cảm Xúc Vip                       ', end = '\r')
+                        print(f'{luc}Tìm Thấy {vang}{len(like2)} {luc}Nhiệm Vụ Cảm Xúc Vip                       ', end = '\r')
                         for x in like2:
                             try:
                                 idpost = x['idpost']
@@ -857,13 +807,13 @@ def Main():
                                 countdown(6)
                             getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
                             if 'success' in getuid:
-                                uid = getuid['id']
+                                uuid = getuid['id']
                             else:
                                 print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 countdown(3)
-                            like = _Like(ck, uid, typee, _info[0], _info[1])
+                            like = _Like(ck, uuid, typee, _info[0], _info[1])
                             if like == False:
-                                print(f"{cam}FAIL {lam}{typee}{trang}: {vang}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f"{cam}FAIL {lam}{typee}{trang}: {vang}{uuid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 _Bypass(ck, _info[1], _info[0])
                                 loicamxuc += 1
                                 countdown(3)
@@ -874,7 +824,7 @@ def Main():
                                     "content-type":"application/x-www-form-urlencoded; charset=UTF-8",
                                     "origin":"https://tuongtaccheo.com",
                                     "cookie": cookie
-                                }
+                               }
                                 data = {
                                     'id': idpost
                                 }
@@ -890,7 +840,7 @@ def Main():
                                     xu = get.split('"soduchinh">')[1].split('<')[0]
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}{typee}VIP\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+1100\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
+                                    print(f'{do}| {vang}{dem}{do} | {xanh}{time}{do} | {vang}{typee}{do} | {trang}{uuid}{do} | {vang}+1100{do} | {luc}{str(format(int(xu),","))} {do}| {xanh}{user}')
                                     loicamxuc = 0
                                     if dem % doinick == 0:
                                         ptool = 1
@@ -913,84 +863,7 @@ def Main():
                 if ptool == 1:
                     break
 
-                if nvreac == 1:
-                    listcx = getjob(cookie, 'camxuccheo')
-                    like1 = listcx.text
-                    like2 = listcx.json()
-                    if like1 == []:
-                        print(f'{cam}Hết Nhiệm Vụ Cảm Xúc                           ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        nvreac = 0
-                    elif 'error' in like2:
-                        print(f'{cam}Lấy nhiệm vụ sau 5 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(15)
-                        nvreac = 0
-                    else:
-                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Cảm Xúc                      ', end = '\r')
-                        for x in like2:
-                            try:
-                                idpost = x['idpost']
-                                link = x['link']
-                                typee = x['loaicx']
-                            except:
-                                countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
-                            if 'success' in getuid:
-                                uid = getuid['id']
-                            else:
-                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
-                                countdown(3)
-                            like = _Like(ck, uid, typee, _info[0], _info[1])
-                            if like == False:
-                                print(f"{red}FAIL {lam}{typee}{trang}: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
-                                _Bypass(ck, _info[1], _info[0])
-                                loicamxuc += 1
-                                countdown(3)
-                            else:
-                                headers = {
-                                    "Host":"tuongtaccheo.com",
-                                    "x-requested-with":"XMLHttpRequest",
-                                    "content-type":"application/x-www-form-urlencoded; charset=UTF-8",
-                                    "origin":"https://tuongtaccheo.com",
-                                    "cookie": cookie
-                                }
-                                data = {
-                                    'id': idpost
-                                }
-                                nhan = requests.post('https://tuongtaccheo.com/kiemtien/camxuccheo/nhantien.php',headers=headers, data=data).json()
-                                if 'mess' in nhan:
-                                    headers = {
-                                        "Host": "tuongtaccheo.com",
-                                        "x-requested-with": "XMLHttpRequest",
-                                        "user-agent": "Mozilla/5.0 (Linux; Android 10; Mi 9T Pro) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/12.1 Chrome/79.0.3945.136 Mobile Safari/537.36",
-                                        "cookie": cookie
-                                    }
-                                    get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
-                                    xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    dem+=1
-                                    time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}{typee}\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+700\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
-                                    loicamxuc = 0
-                                    if dem % doinick == 0:
-                                        ptool = 1
-                                        break
-                                    if dem % nvblock == 0:
-                                        chongblock(delaybl)
-                                    else:
-                                        _delay(randint(min, max))
-
-                            if loicamxuc >= nhiemvuloi:
-                                _info = _Infofb(ck)
-                                if _info !=False:
-                                    print(f'{red}Cookie Tài Khoản {lam}{tenfb}{red} Đã Bị Out !!!                ')
-                                else:
-                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block {lam}Cảm Xúc {red}!!!					')
-                                listck.remove(ck)
-                                ptool = 1
-                                break
-
-                if ptool == 1:
-                    break
-
+                
                 if nvreaccmt == 1:
                     listcxcmt = getjob(cookie, 'camxuccheobinhluan')
                     like1 = listcxcmt.text
@@ -1003,7 +876,7 @@ def Main():
                         countdown(15)
                         nvreaccmt = 0
                     else:
-                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Cảm Xúc Cmt                     ', end = '\r')
+                        print(f'{luc}Tìm Thấy {vang}{len(like2)} {luc}Nhiệm Vụ Cảm Xúc Cmt                     ', end = '\r')
                         for x in like2:
                             try:
                                 idpost = x['idpost']
@@ -1013,13 +886,15 @@ def Main():
                                 countdown(6)
                             getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
                             if 'success' in getuid:
-                                uid = getuid['id']
+                                uuid = getuid['id']
                             else:
                                 print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 countdown(3)
-                            like = _React_Cmt(ck, _info[1], _info[0], uid, typee)
+                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
+                            uid = 'Ẩn ID'
+                            like = _React_Cmt(ck, _info[1], _info[0], uuid, typee)
                             if like == False:
-                                print(f"{cam}FAIL {lam}{typee} CMT{trang}: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
+                                print(f"{cam}FAIL {lam}{typee} CMT{trang}: {lam}{uuid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
                                 _Bypass(ck, _info[1], _info[0])
                                 loicxcmt += 1
                                 countdown(3)
@@ -1046,7 +921,7 @@ def Main():
                                     xu = get.split('"soduchinh">')[1].split('<')[0]
                                     dem+=1
                                     time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}{typee}CMT\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+700\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
+                                    print(f'{do}| {vang}{dem}{do} | {xanh}{time}{do} | {vang}{typee}CMT{do} | {trang}{uuid}{do} | {vang}+600{do} | {luc}{str(format(int(xu),","))} {do}| {xanh}{user}')
                                     loicxcmt = 0
                                     if dem % doinick == 0:
                                         ptool = 1
@@ -1069,318 +944,10 @@ def Main():
                 if ptool == 1:
                     break
 
-                if nvfollow == 1:
-                    listfl = getjob(cookie, 'subcheo')
-                    like1 = listfl.text
-                    like2 = listfl.json()
-                    if like1 == []:
-                        print(f'{cam}Hết Nhiệm Vụ Follow              ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        nvfollow = 0
-                    elif 'error' in like2:
-                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(17)
-                        nvfollow = 0
-                    else:
-                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Follow                      ', end = '\r')
-                        for x in like2:
-                            try:
-                                idpost = x['idpost']
-                                link = x['link']
-                            except:
-                                countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
-                            if 'success' in getuid:
-                                uid = getuid['id']
-                            else:
-                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
-                                countdown(3)
-                            like = _Follow(ck, _info[1], _info[0], uid)
-                            if like == False:
-                                print(f"{cam}FAIL FOLLOW{trang}: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
-                                _Bypass(ck, _info[1], _info[0])
-                                loifl += 1
-                                countdown(3)
-                            else:
-                                headers = {
-                                    "Host":"tuongtaccheo.com",
-                                    "x-requested-with":"XMLHttpRequest",
-                                    "content-type":"application/x-www-form-urlencoded; charset=UTF-8",
-                                    "origin":"https://tuongtaccheo.com",
-                                    "cookie": cookie
-                                }
-                                data = {
-                                    'id': idpost
-                                }
-                                nhan = requests.post('https://tuongtaccheo.com/kiemtien/subcheo/nhantien.php',headers=headers, data=data).json()
-                                if 'mess' in nhan:
-                                    headers = {
-                                        "Host": "tuongtaccheo.com",
-                                        "x-requested-with": "XMLHttpRequest",
-                                        "user-agent": "Mozilla/5.0 (Linux; Android 10; Mi 9T Pro) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/12.1 Chrome/79.0.3945.136 Mobile Safari/537.36",
-                                        "cookie": cookie
-                                    }
-                                    get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
-                                    xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    dem+=1
-                                    time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] [\033[1;35m{cam}FOLLOW\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+700\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
-                                    loifl = 0
-                                    if dem % doinick == 0:
-                                        ptool = 1
-                                        break
-                                    if dem % nvblock == 0:
-                                        chongblock(delaybl)
-                                    else:
-                                        _delay(randint(min, max))
-
-                            if loifl >= nhiemvuloi:
-                                _info = _Infofb(ck)
-                                if _info !=False:
-                                    print(f'{red}Cookie Tài Khoản {lam}{tenfb}{red} Đã Bị Out !!!                ')
-                                else:
-                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block {lam}Follow {red}!!!					')
-                                listck.remove(ck)
-                                ptool = 1
-                                break
-
-                if ptool == 1:
-                    break
-
-                if nvcmt == 1:
-                    cmtcheo = getjob(cookie, 'cmtcheo')
-                    like1 = cmtcheo.text
-                    like2 = cmtcheo.json()
-                    if like1 == []:
-                        print(f'{cam}Hết Nhiệm Vụ Cmt              ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        nvcmt = 0
-                    elif 'error' in like2:
-                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(15)
-                        nvcmt = 0
-                    else:
-                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Cmt                      ', end = '\r')
-                        for x in like2:
-                            try:
-                                idpost = x['idpost']
-                                link = x['link']
-                                ndcmt = json.loads(x["nd"])[0]
-                            except:
-                                countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
-                            if 'success' in getuid:
-                                uid = getuid['id']
-                            else:
-                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
-                                countdown(3)
-                            like = CMT(ck, uid, _info[1], _info[0], ndcmt)
-                            if like == False:
-                                print(f"{red}FAIL CMT{trang}: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
-                                _Bypass(ck, _info[1], _info[0])
-                                loicmt += 1
-                                countdown(3)
-                            else:
-                                headers = {
-                                    "Host":"tuongtaccheo.com",
-                                    "x-requested-with":"XMLHttpRequest",
-                                    "content-type":"application/x-www-form-urlencoded; charset=UTF-8",
-                                    "origin":"https://tuongtaccheo.com",
-                                    "cookie": cookie
-                                }
-                                data = {
-                                    'id': idpost
-                                }
-                                nhan = requests.post('https://tuongtaccheo.com/kiemtien/cmtcheo/nhantien.php',headers=headers, data=data).json()
-                                if 'mess' in nhan:
-                                    headers = {
-                                        "Host": "tuongtaccheo.com",
-                                        "x-requested-with": "XMLHttpRequest",
-                                        "user-agent": "Mozilla/5.0 (Linux; Android 10; Mi 9T Pro) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/12.1 Chrome/79.0.3945.136 Mobile Safari/537.36",
-                                        "cookie": cookie
-                                    }
-                                    get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
-                                    xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    dem+=1
-                                    time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}CMTCHEO\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+1400\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
-                                    loicmt = 0
-                                    if dem % doinick == 0:
-                                        ptool = 1
-                                        break
-                                    if dem % nvblock == 0:
-                                        chongblock(delaybl)
-                                    else:
-                                        _delay(randint(min, max))
-
-                            if loicmt >= nhiemvuloi:
-                                _info = _Infofb(ck)
-                                if _info !=False:
-                                    print(f'{red}Cookie Tài Khoản {lam}{tenfb}{red} Đã Bị Out !!!                ')
-                                else:
-                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block {lam}Cmt {red}!!!					')
-                                listck.remove(ck)
-                                ptool = 1
-                                break
                 
-                if ptool == 1:
-                    break
-                
-                if nvshare == 1:
-                    listshare = getjob(cookie, 'sharecheo')
-                    like1 = listshare.text
-                    like2 = listshare.json()
-                    if like1 == []:
-                        print(f'{cam}Hết Nhiệm Vụ Share              ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        nvshare = 0
-                    elif 'error' in like2:
-                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(15)
-                        nvshare = 0
-                    else:
-                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Share                      ', end = '\r')
-                        for x in like2:
-                            try:
-                                idpost = x['idpost']
-                                link = x['link']
-                            except:
-                                countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
-                            if 'success' in getuid:
-                                uid = getuid['id']
-                            else:
-                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
-                                countdown(3)
-                            share = _Share(ck, _info[1], _info[0], uid)
-                            if share == False:
-                                print(f"{red}FAIL SHARE{trang}: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
-                                _Bypass(ck, _info[1], _info[0])
-                                loishare += 1
-                                countdown(3)
-                            else:
-                                headers = {
-                                    "Host":"tuongtaccheo.com",
-                                    "x-requested-with":"XMLHttpRequest",
-                                    "content-type":"application/x-www-form-urlencoded; charset=UTF-8",
-                                    "origin":"https://tuongtaccheo.com",
-                                    "cookie": cookie
-                                }
-                                data = {
-                                    'id': idpost
-                                }
-                                nhan = requests.post('https://tuongtaccheo.com/kiemtien/sharecheo/nhantien.php',headers=headers, data=data).json()
-                                if 'mess' in nhan:
-                                    headers = {
-                                        "Host": "tuongtaccheo.com",
-                                        "x-requested-with": "XMLHttpRequest",
-                                        "user-agent": "Mozilla/5.0 (Linux; Android 10; Mi 9T Pro) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/12.1 Chrome/79.0.3945.136 Mobile Safari/537.36",
-                                        "cookie": cookie
-                                    }
-                                    get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
-                                    xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    dem+=1
-                                    time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}SHARE\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+600\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
-                                    loishare = 0
-                                    if dem % doinick == 0:
-                                        ptool = 1
-                                        break
-                                    if dem % nvblock == 0:
-                                        chongblock(delaybl)
-                                    else:
-                                        _delay(randint(min, max))
-
-                            if loishare >= nhiemvuloi:
-                                _info = _Infofb(ck)
-                                if _info !=False:
-                                    print(f'{red}Cookie Tài Khoản {lam}{tenfb}{red} Đã Bị Out !!!                ')
-                                else:
-                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block {lam}Share {red}!!!					')
-                                listck.remove(ck)
-                                ptool = 1
-                                break
-                
-                if ptool == 1:
-                    break
-                
-                if nvlikepage == 1:
-                    listlikepage = getjob(cookie, 'likepagecheo')
-                    like1 = listlikepage.text
-                    like2 = listlikepage.json()
-                    if like1 == []:
-                        print(f'{cam}Hết Nhiệm Vụ Like Page             ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        nvlikepage = 0
-                    elif 'error' in like2:
-                        print(f'{cam}Lấy nhiệm vụ sau 15 giây                            ', end = '\r');sleep(2); print('                                                        ', end = '\r')
-                        countdown(15)
-                        nvlikepage = 0
-                    else:
-                        print(f'{cam}Tìm Thấy {lam}{len(like2)} {cam}Nhiệm Vụ Like Page                     ', end = '\r')
-                        for x in like2:
-                            try:
-                                idpost = x['idpost']
-                                link = x['link']
-                            except:
-                                countdown(6)
-                            getuid = requests.post('https://id.traodoisub.com/api.php',data={'link': link}).json()
-                            if 'success' in getuid:
-                                uid = getuid['id']
-                            else:
-                                print(f'{red}Link bài viết đã bị die, đang đổi link...', end = '\r'); sleep(2); print('                                                       ', end = '\r')
-                                countdown(3)
-                            likepage = _Page(ck, _info[1], _info[0], uid)
-                            if likepage == False:
-                                print(f"{red}FAIL LIKEPAGE{trang}: {lam}{uid}             ", end = '\r'); sleep(2); print('                                                       ', end = '\r')
-                                _Bypass(ck, _info[1], _info[0])
-                                loilikepage += 1
-                                countdown(3)
-                            else:
-                                headers = {
-                                    "Host":"tuongtaccheo.com",
-                                    "x-requested-with":"XMLHttpRequest",
-                                    "content-type":"application/x-www-form-urlencoded; charset=UTF-8",
-                                    "origin":"https://tuongtaccheo.com",
-                                    "cookie": cookie
-                                }
-                                data = {
-                                    'id': idpost
-                                }
-                                nhan = requests.post('https://tuongtaccheo.com/kiemtien/likepagecheo/nhantien.php',headers=headers, data=data).json()
-                                if 'mess' in nhan:
-                                    headers = {
-                                        "Host": "tuongtaccheo.com",
-                                        "x-requested-with": "XMLHttpRequest",
-                                        "user-agent": "Mozilla/5.0 (Linux; Android 10; Mi 9T Pro) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/12.1 Chrome/79.0.3945.136 Mobile Safari/537.36",
-                                        "cookie": cookie
-                                    }
-                                    get = requests.get('https://tuongtaccheo.com/home.php',headers=headers).text
-                                    xu = get.split('"soduchinh">')[1].split('<')[0]
-                                    dem+=1
-                                    time = datetime.now().strftime("%H:%M:%S")
-                                    print(f'\033[1;35m[{trang}{dem}\033[1;35m] \033[1;35m[{lam}{time}\033[1;35m] \033[1;35m[{cam}LIKEPAGE\033[1;35m] \033[1;35m[{luc}DONE\033[1;35m] \033[1;35m[{lam}ẨN ID\033[1;35m] \033[1;35m[{luc}+1300\033[1;35m] \033[1;35m[{vang}{xu}\033[1;35m]')
-                                    loilikepage = 0
-                                    if dem % doinick == 0:
-                                        ptool = 1
-                                        break
-                                    if dem % nvblock == 0:
-                                        chongblock(delaybl)
-                                    else:
-                                        _delay(randint(min, max))
-
-                            if loilikepage >= nhiemvuloi:
-                                _info = _Infofb(ck)
-                                if _info !=False:
-                                    print(f'{red}Cookie Tài Khoản {lam}{tenfb}{red} Đã Bị Out !!!                ')
-                                else:
-                                    print(f'{red}Tài Khoản {lam}{tenfb} {red}Đã Bị Block {lam}Like Page{red}!!!					')
-                                listck.remove(ck)
-                                ptool = 1
-                                break
-
-                if ptool == 1:
-                    break
-
-                if loilike + loicamxuc + loicxcmt + loifl + loicmt + loishare + loilikepage == 0:
+                if loilike + loicamxuc + loicxcmt == 0:
                     for i in range(10, 0, -1):
-                        Write.Print(f' Tất Cả Các Nhiệm Vụ Đã Hết, Vui Lòng Chờ {i} Giây ',Colors.rainbow,interval=0.0001, end = '\r');sleep(1); print('                                                        ', end = '\r')
+                        Write.Print(f' Tất Cả Các Nhiệm Vụ Đã Hết, Vui Lòng Chờ {i} Giây ',Colors.cyan_to_blue,interval=0.0001, end = '\r');sleep(1); print('                                                        ', end = '\r')
 
 if __name__ == '__main__':
     Main()
